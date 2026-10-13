@@ -1,0 +1,112 @@
+{
+  "expo": {
+    "name": "Cento",
+    "slug": "cento",
+    "version": "0.1.0",
+    "scheme": "cento",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.cento",
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.app.cento"
+        ]
+      },
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true,
+        "NSContactsUsageDescription": "Per importare nome e data di nascita dei contatti che scegli. Restano sul dispositivo.",
+        "UIBackgroundModes": [
+          "processing"
+        ]
+      }
+    },
+    "android": {
+      "package": "app.cento",
+      "adaptiveIcon": {
+        "backgroundColor": "#10213f",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.READ_CONTACTS",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.SCHEDULE_EXACT_ALARM"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single",
+      "lang": "it",
+      "themeColor": "#10213f",
+      "description": "I tuoi compleanni restano sul tuo telefono. Nessun account, nessun cloud, nessuna pubblicità.",
+      "name": "Cento",
+      "shortName": "Cento",
+      "backgroundColor": "#f7f4ec"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-localization",
+      "expo-sharing",
+      "expo-background-task",
+      [
+        "expo-notifications",
+        {
+          "color": "#10213f",
+          "defaultChannel": "cento-reminders"
+        }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Per importare nome e data di nascita dei contatti che scegli. Restano sul dispositivo."
+        }
+      ],
+      [
+        "expo-share-intent",
+        {
+          "iosActivationRules": {
+            "NSExtensionActivationSupportsText": true,
+            "NSExtensionActivationSupportsWebURLWithMaxCount": 1,
+            "NSExtensionActivationSupportsWebPageWithMaxCount": 1,
+            "NSExtensionActivationSupportsImageWithMaxCount": 1
+          },
+          "iosAppGroupIdentifier": "group.app.cento",
+          "androidIntentFilters": [
+            "text/*",
+            "image/*"
+          ]
+        }
+      ],
+      [
+        "react-native-android-widget",
+        {
+          "widgets": [
+            {
+              "name": "Cento",
+              "label": "Cento",
+              "description": "Prossimi compleanni, onomastici e feste",
+              "minWidth": "110dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "resizeMode": "horizontal|vertical",
+              "updatePeriodMillis": 1800000
+            }
+          ]
+        }
+      ],
+      "@bacons/apple-targets"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

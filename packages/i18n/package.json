@@ -1,0 +1,19 @@
+{
+  "name": "@cento/i18n",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cento translation catalogs and locale config, shared by app, web, notifications and widget snapshot.",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "node scripts/check-catalogs.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "date-fns": "^4.4.0",
+    "i18next": "^26.4.4"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3"
+  }
+}

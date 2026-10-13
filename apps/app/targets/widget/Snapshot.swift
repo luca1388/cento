@@ -1,0 +1,62 @@
+import Foundation
+
+/// Mirrors the JSON the app writes into the App Group container (`widget-snapshot.json`).
+/// All strings are already localized by the app: the widget never formats or translates anything.
+struct WidgetSnapshot: Decodable {
+    let locale: String
+    let generatedAt: String
+    let days: [WidgetDay]
+}
+
+struct WidgetDay: Decodable {
+    let date: String
+    let headline: String
+    let items: [WidgetItem]
+}
+
+struct WidgetItem: Decodable, Identifiable {
+    let id: String
+    let personId: String
+    let kind: String   // birthday | nameday | celebration
+    let name: String
+    let short: String  // "Giulia · 3 giorni"
+    let long: String   // "Tra 3 giorni · compie 29 anni"
+    let deepLink: String
+
+    var glyph: String {
+        switch kind {
+        case "nameday": return "flame.fill"
+        case "celebration": return "party.popper.fill"
+        default: return "birthday.cake.fill"
+        }
+    }
+    var countdown: String {
+        short.components(separatedBy: " · ").last ?? short
+    }
+}
+
+enum SnapshotStore {
+    static let appGroup = "group.app.cento"
+    static let fileName = "widget-snapshot.json"
+
+    static func load() -> WidgetSnapshot? {
+        guard let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else { return nil }
+        guard let data = try? Data(contentsOf: dir.appendingPathComponent(fileName)) else { return nil }
+        return try? JSONDecoder().decode(WidgetSnapshot.self, from: data)
+    }
+
+    static func isoDay(_ date: Date) -> String {
+        let f = DateFormatter()
+        f.calendar = Calendar(identifier: .gregorian)
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.timeZone = .current
+        f.dateFormat = "yyyy-MM-dd"
+        return f.string(from: date)
+    }
+
+    /// The entry for a calendar day; falls back to the last pre-rendered day when the horizon is exceeded.
+    static func entry(for date: Date, in snapshot: WidgetSnapshot) -> WidgetDay? {
+        let key = isoDay(date)
+        return snapshot.days.first { $0.date == key } ?? snapshot.days.last
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cento-web",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd /Users/luca.gandini/projects/birthday-app-docs/demo/apps/app && . ~/.nvm/nvm.sh && nvm use 22 >/dev/null && npx expo start --web --port 8081"],
+      "port": 8081
+    }
+  ]
+}

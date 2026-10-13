@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0;font:14px -apple-system,system-ui,sans-serif}img{max-width:100%}</style>
+<title>Birthday App Mockups</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: a design-review board. Each section is a row of device frames with a short caption under each. */
+:root {
+  --bg: #f3f1f6;            /* cool off-white with a violet bias */
+  --fg: #1d1a2b;
+  --muted: #6b6683;
+  --line: #dcd8e6;
+  --card: #ffffff;
+  --accent: #c8246a;        /* raspberry */
+  --accent-soft: #fbe3ec;
+  --today: #e8a317;         /* marigold for "today" */
+  --today-soft: #fff1cf;
+  --screen: #faf9fc;        /* phone screen ground */
+  --screen-card: #ffffff;
+  --frame: #15131f;
+  --display: "Bricolage Grotesque", "Avenir Next", "Helvetica Neue", sans-serif;
+  --ui: "Manrope", -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15131d; --fg: #ecebf2; --muted: #a09bb6; --line: #2d2a3b; --card: #1e1b2a;
+    --accent: #ff5f98; --accent-soft: #3a1a2a; --today: #f4b942; --today-soft: #3b2f12;
+    --screen: #111017; --screen-card: #1c1a26; --frame: #3a3748; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15131d; --fg: #ecebf2; --muted: #a09bb6; --line: #2d2a3b; --card: #1e1b2a;
+  --accent: #ff5f98; --accent-soft: #3a1a2a; --today: #f4b942; --today-soft: #3b2f12;
+  --screen: #111017; --screen-card: #1c1a26; --frame: #3a3748; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--ui); line-height: 1.45; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 40px 72px; padding-inline: 20px; }
+header h1 { font-family: var(--display); font-size: clamp(30px, 4vw, 44px); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
+header p { color: var(--muted); max-width: 62ch; margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; font-size: 13px; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.legend .a::before { background: var(--accent); }
+.legend .t::before { background: var(--today); }
+
+section { margin-top: 56px; }
+section > h2 { font-family: var(--display); font-size: 22px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.01em; }
+section > p.lead { color: var(--muted); margin: 0 0 22px; max-width: 70ch; }
+.row { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
+figure { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+figcaption { font-size: 13px; color: var(--muted); max-width: 300px; line-height: 1.4; }
+figcaption b { color: var(--fg); font-weight: 700; }
+
+/* Phone frame */
+.phone { width: 300px; max-width: 100%; height: 620px; border-radius: 40px; background: var(--frame); padding: 10px; box-shadow: 0 20px 40px -20px rgba(20,10,40,.45); }
+.phone .screen { position: relative; height: 100%; border-radius: 31px; background: var(--screen); overflow: hidden; display: flex; flex-direction: column; font-size: 13px; }
+.status { display: flex; justify-content: space-between; padding: 12px 24px 0; font-size: 12px; font-weight: 700; }
+.notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 92px; height: 24px; border-radius: 14px; background: var(--frame); }
+.content { flex: 1; overflow: hidden; padding: 14px 16px 0; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.tabbar { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); padding: 10px 8px 16px; font-size: 10px; font-weight: 700; color: var(--muted); text-align: center; }
+.tabbar .on { color: var(--accent); }
+.tabbar i { display: block; width: 22px; height: 18px; margin: 0 auto 4px; border-radius: 6px; background: currentColor; opacity: .25; }
+.tabbar .on i { opacity: 1; }
+
+.app-title { font-family: var(--display); font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin: 0; line-height: 1.05; }
+.sub { color: var(--muted); font-size: 12px; }
+.group { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.person { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; background: var(--screen-card); border: 1px solid var(--line); border-radius: 14px; padding: 9px 10px; }
+.person.today { border-color: var(--today); background: var(--today-soft); }
+.avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 12px; color: #fff; }
+.name { font-weight: 700; font-size: 13px; }
+.meta { color: var(--muted); font-size: 11px; }
+.when { text-align: right; font-variant-numeric: tabular-nums; }
+.when b { display: block; font-size: 14px; }
+.when small { color: var(--muted); font-size: 10px; }
+.person.today .when b { color: #8a5a00; }
+.fab { position: absolute; right: 18px; bottom: 74px; width: 48px; height: 48px; border-radius: 16px; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 26px; font-weight: 400; box-shadow: 0 10px 20px -8px var(--accent); }
+
+/* Detail screen */
+.hero { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; padding-top: 4px; }
+.hero .avatar { width: 64px; height: 64px; font-size: 20px; }
+.hero h3 { margin: 0; font-family: var(--display); font-size: 20px; font-weight: 700; }
+.pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; background: var(--accent-soft); color: var(--accent); }
+.stat { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.stat div { background: var(--screen-card); border: 1px solid var(--line); border-radius: 12px; padding: 8px; text-align: center; }
+.stat b { display: block; font-size: 16px; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 10px; color: var(--muted); }
+.card { background: var(--screen-card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+.card h4 { margin: 0 0 6px; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.check { display: flex; align-items: center; gap: 8px; padding: 3px 0; font-size: 12px; }
+.check i { width: 14px; height: 14px; border: 1.5px solid var(--muted); border-radius: 4px; flex: none; }
+.check.done i { background: var(--accent); border-color: var(--accent); }
+.check.done span { text-decoration: line-through; color: var(--muted); }
+.topnav { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--accent); }
+.topnav .t { color: var(--fg); font-size: 14px; }
+
+/* Forms */
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.input { background: var(--screen-card); border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; font-size: 13px; display: flex; justify-content: space-between; }
+.input .ph { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.chip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.toggle-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.toggle-row:last-child { border-bottom: 0; }
+.tg { width: 34px; height: 20px; border-radius: 10px; background: var(--line); position: relative; flex: none; }
+.tg::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; }
+.tg.on { background: var(--accent); }
+.tg.on::after { left: 16px; }
+.btn { background: var(--accent); color: #fff; font-weight: 800; text-align: center; padding: 11px; border-radius: 12px; font-size: 13px; }
+.btn.ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+.note { font-size: 11px; color: var(--muted); }
+
+/* Widgets */
+.widget { border-radius: 22px; background: var(--screen-card); border: 1px solid var(--line); padding: 14px; font-size: 12px; box-shadow: 0 14px 30px -18px rgba(20,10,40,.5); }
+.w-small { width: 155px; height: 155px; display: flex; flex-direction: column; justify-content: space-between; }
+.w-medium { width: 329px; max-width: 100%; height: 155px; display: grid; grid-template-columns: 1fr 1px 1fr; gap: 12px; }
+.w-android { width: 300px; max-width: 100%; border-radius: 26px; background: #fff; color: #1d1a2b; border: 0; }
+.w-eyebrow { font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.w-name { font-family: var(--display); font-size: 18px; font-weight: 700; line-height: 1.05; margin-top: 4px; }
+.w-days { font-size: 30px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.w-days small { font-size: 11px; font-weight: 700; color: var(--muted); display: block; margin-top: 3px; }
+.w-list { display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+.w-list div { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px dashed var(--line); padding-bottom: 5px; }
+.w-list div:last-child { border: 0; padding: 0; }
+.w-list b { font-size: 12px; }
+.w-list span { color: var(--muted); font-variant-numeric: tabular-nums; }
+.vsep { background: var(--line); }
+.homebg { padding: 26px; border-radius: 28px; background: linear-gradient(145deg, #6a4bd8, #c8246a 60%, #ff8a5b); display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; max-width: 100%; }
+
+/* Web mockup */
+.browser { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -24px rgba(20,10,40,.4); }
+.chrome { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+.chrome i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: inline-block; }
+.chrome .url { flex: 1; background: var(--bg); border-radius: 8px; padding: 5px 10px; }
+.web-scroll { overflow-x: auto; }
+.web { min-width: 860px; display: grid; grid-template-columns: 200px 1fr 320px; height: 540px; font-size: 13px; }
+.side { border-right: 1px solid var(--line); padding: 18px 14px; display: flex; flex-direction: column; gap: 6px; }
+.side .brand { font-family: var(--display); font-weight: 700; font-size: 18px; margin-bottom: 12px; letter-spacing: -0.02em; }
+.nav { padding: 7px 10px; border-radius: 8px; font-weight: 600; color: var(--muted); }
+.nav.on { background: var(--accent-soft); color: var(--accent); }
+.side .spacer { flex: 1; }
+.main { padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; min-width: 0; }
+.main .head { display: flex; justify-content: space-between; align-items: baseline; }
+.main .head h3 { margin: 0; font-family: var(--display); font-size: 22px; font-weight: 700; }
+.search { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; color: var(--muted); font-size: 12px; width: 220px; }
+.main .person { grid-template-columns: 32px 1fr 120px auto; }
+.main .person.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.panel { border-left: 1px solid var(--line); padding: 20px 18px; display: flex; flex-direction: column; gap: 12px; background: var(--screen); min-width: 0; }
+.panel .hero .avatar { width: 56px; height: 56px; font-size: 18px; }
+.kbd { font-size: 10px; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; color: var(--muted); }
+
+@media (prefers-reduced-motion: no-preference) { .person.today { animation: glow 2.4s ease-in-out infinite alternate; } }
+@keyframes glow { from { box-shadow: 0 0 0 0 transparent; } to { box-shadow: 0 0 0 3px var(--today-soft); } }
+@media (max-width: 480px) { .row { gap: 32px; } .w-medium { grid-template-columns: 1fr; height: auto; } .vsep { display: none; } }
+.kind { display:inline-block; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; padding:1px 6px; border-radius:999px; background:var(--accent-soft); color:var(--accent); margin-left:4px; vertical-align:1px; }
+.kind.nd { background:var(--today-soft); color:#8a5a00; }
+.hist { display:grid; grid-template-columns:34px 1fr auto; gap:6px; font-size:11px; padding:3px 0; }
+.hist b { color:var(--muted); font-weight:700; font-variant-numeric:tabular-nums; }
+.hist span:last-child { color:var(--muted); font-variant-numeric:tabular-nums; }
+.idea { display:grid; grid-template-columns:26px 1fr auto; gap:8px; align-items:center; font-size:12px; padding:4px 0; }
+.idea i { width:26px; height:26px; border-radius:7px; background:var(--line); }
+.idea small { display:block; color:var(--muted); font-size:10px; }
+.st { font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; padding:2px 6px; border-radius:999px; border:1px solid var(--line); color:var(--muted); }
+.st.b { border-color:var(--accent); color:var(--accent); }
+.sheet { position:absolute; left:0; right:0; bottom:0; background:var(--screen); border-radius:22px 22px 0 0; padding:12px 16px 20px; display:flex; flex-direction:column; gap:10px; box-shadow:0 -10px 30px rgba(0,0,0,.25); }
+.grab { width:36px; height:4px; border-radius:2px; background:var(--line); margin:0 auto; }
+.dim { position:absolute; inset:0; background:rgba(20,10,40,.45); }
+.fakeweb { padding:16px 14px; display:flex; flex-direction:column; gap:8px; }
+.fakeweb .bar { height:10px; border-radius:5px; background:var(--line); }
+.fakeweb .img { height:120px; border-radius:10px; background:linear-gradient(135deg,#d9d2e6,#b7adcc); }
+.lock { width:300px; max-width:100%; border-radius:32px; padding:28px 22px; background:linear-gradient(170deg,#1b1b3a,#3a1d4e 60%,#7a2a4e); color:#fff; display:flex; flex-direction:column; align-items:center; gap:10px; min-height:360px; }
+.lock .inline { font-size:12px; opacity:.9; }
+.lock .time { font-size:64px; font-weight:300; line-height:1; letter-spacing:-0.03em; }
+.lock .date { font-size:14px; opacity:.85; margin-top:-4px; }
+.lock .acc { display:flex; gap:12px; margin-top:8px; align-items:center; }
+.lock .circ { width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.18); display:grid; place-items:center; font-weight:800; font-size:20px; line-height:1; }
+.lock .circ small { font-size:8px; font-weight:700; opacity:.8; }
+.lock .rect { width:150px; height:56px; border-radius:14px; background:rgba(255,255,255,.18); padding:8px 10px; font-size:11px; line-height:1.25; }
+.lock .rect b { display:block; font-size:12px; }
+.lock .rect span { opacity:.8; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <h1>Cento Mockups</h1>
+  <p>Mobile screens, home-screen widgets and the web layout for Cento. The main feature is offline first and privacy first: no account, no cloud, no analytics, everything on the device and exportable. The UI is Italian by default and English as second language, chosen from the device locale or in Settings. Screens below are shown in English, with the home screen also in Italian. The list mixes birthdays, name days (onomastico) and celebrations; the person screen holds the celebration plan, gift ideas captured from the share sheet, and the gift history. Example people are placeholders. Dates assume today is Sunday 12 October 2026.</p>
+  <div class="legend"><span class="a">Accent, actions and selection</span><span class="t">Today</span></div>
+</header>
+
+<section>
+  <h2>Mobile screens</h2>
+  <p class="lead">Four screens cover the whole app. The upcoming list is the home screen and is what the app opens to.</p>
+  <div class="row">
+
+    <!-- 1. Upcoming list -->
+    <figure>
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="status"><span>9:41</span><span>●●● ▲ ▮</span></div>
+        <div class="content">
+          <div><h2 class="app-title">Upcoming</h2><div class="sub">12 people · next one is today</div></div>
+          <div class="group">Today</div>
+          <div class="person today"><div class="avatar" style="background:#c8246a">MR</div><div><div class="name">Marta Rossi</div><div class="meta">Turns 34 · Sister</div></div><div class="when"><b>Today</b><small>12 Oct</small></div></div>
+          <div class="group">This week</div>
+          <div class="person"><div class="avatar" style="background:#6a4bd8">GB</div><div><div class="name">Giulia Bianchi</div><div class="meta">Turns 29 · party Sat 18</div></div><div class="when"><b>3 days</b><small>Wed 15 Oct</small></div></div>
+          <div class="person"><div class="avatar" style="background:#8a5a00">TG</div><div><div class="name">Teresa Galli<span class="kind nd">Name day</span></div><div class="meta">Santa Teresa · Aunt</div></div><div class="when"><b>3 days</b><small>Wed 15 Oct</small></div></div>
+          <div class="person"><div class="avatar" style="background:#1f8a70">PC</div><div><div class="name">Paolo Conti</div><div class="meta">Turns 41 · Work</div></div><div class="when"><b>6 days</b><small>Sat 18 Oct</small></div></div>
+          <div class="person"><div class="avatar" style="background:#6a4bd8">GB</div><div><div class="name">Giulia's party<span class="kind">Party</span></div><div class="meta">20:30 · Trattoria Da Enzo</div></div><div class="when"><b>6 days</b><small>Sat 18 Oct</small></div></div>
+          <div class="group">This month</div>
+          <div class="person"><div class="avatar" style="background:#e8703a">EF</div><div><div class="name">Elena Ferri</div><div class="meta">Age unknown · Neighbour</div></div><div class="when"><b>12 days</b><small>Fri 24 Oct</small></div></div>
+          <div class="person"><div class="avatar" style="background:#2f6fde">MN</div><div><div class="name">Marco Neri</div><div class="meta">Turns 7 · Nephew</div></div><div class="when"><b>18 days</b><small>Thu 30 Oct</small></div></div>
+        </div>
+        <div class="fab">+</div>
+        <div class="tabbar"><div class="on"><i></i>Upcoming</div><div><i></i>People</div><div><i></i>Settings</div></div>
+      </div></div>
+      <figcaption><b>1. Upcoming list.</b> Birthdays, name days and celebrations in one list, grouped by Today, This week, This month, Later. Name days and parties carry a small tag. A birthday with a planned party shows it as a subline. People with no birth year show "Age unknown".</figcaption>
+    </figure>
+
+    <!-- 2. Person detail -->
+    <figure>
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="status"><span>9:41</span><span>●●● ▲ ▮</span></div>
+        <div class="content">
+          <div class="topnav"><span>‹ Upcoming</span><span class="t"></span><span>Edit</span></div>
+          <div class="hero">
+            <div class="avatar" style="background:#6a4bd8">GB</div>
+            <h3>Giulia Bianchi</h3>
+            <span class="pill">In 3 days · Wed 15 October</span>
+          </div>
+          <div class="stat"><div><b>29</b><span>turns</span></div><div><b>1997</b><span>born</span></div><div><b>22 May</b><span>name day</span></div></div>
+          <div class="card" style="border-color:var(--accent)"><h4>Party · Sat 18 Oct, 20:30</h4>
+            <div class="note" style="margin-bottom:4px">Trattoria Da Enzo · reminders 3 days before, on the day</div>
+            <div class="check done"><i></i><span>Book table</span></div>
+            <div class="check"><i></i><span>Invite Sara and Paolo</span></div>
+            <div class="check"><i></i><span>Order the cake</span></div>
+          </div>
+          <div class="card"><h4>Gift ideas</h4>
+            <div class="idea"><i style="background:#b7adcc"></i><div>Pottery wheel starter kit<small>amazon.it · saved 14 Jul</small></div><span class="st b">bought</span></div>
+            <div class="idea"><i></i><div>The book she mentioned<small>note · 3 Sep</small></div><span class="st">idea</span></div>
+          </div>
+          <div class="card"><h4>Gift history</h4>
+            <div class="hist"><b>2025</b><span>Ceramic bowl set</span><span>45 €</span></div>
+            <div class="hist"><b>2024</b><span>Hiking socks and map</span><span>20 €</span></div>
+          </div>
+          <div class="card"><h4>Notes</h4><div class="note">Doesn't drink. Loves ceramics and hiking.</div></div>
+        </div>
+        <div class="tabbar"><div class="on"><i></i>Upcoming</div><div><i></i>People</div><div><i></i>Settings</div></div>
+      </div></div>
+      <figcaption><b>2. Person detail.</b> Birthday, age and name day at the top. The party card is this year's celebration with its own date, place, reminders and checklist. Gift ideas show where they came from and their status; the history shows what was given in past years with the amount.</figcaption>
+    </figure>
+
+    <!-- 3. Add / edit -->
+    <figure>
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="status"><span>9:41</span><span>●●● ▲ ▮</span></div>
+        <div class="content">
+          <div class="topnav"><span>Cancel</span><span class="t">New person</span><span>Save</span></div>
+          <div class="btn ghost">Import from Contacts</div>
+          <div class="field"><label>Name</label><div class="input">Sara Galli</div></div>
+          <div class="field"><label>Birthday</label><div class="input"><span>3 November</span><span class="ph">day · month ›</span></div></div>
+          <div class="field"><label>Year (optional)</label><div class="input"><span>1996</span><span class="ph">turns 30 ›</span></div></div>
+          <div class="field"><label>Relationship</label><div class="chips"><span class="chip">Family</span><span class="chip on">Friend</span><span class="chip">Work</span><span class="chip">Neighbour</span><span class="chip">+</span></div></div>
+          <div class="field"><label>Remind me</label><div class="chips"><span class="chip on">1 week</span><span class="chip on">1 day</span><span class="chip on">On the day</span><span class="chip">2 weeks</span></div></div>
+          <div class="field"><label>Notes</label><div class="input ph">Likes, dislikes, sizes…</div></div>
+          <div class="note">Dates are saved as a calendar day, so the birthday never shifts with time zones. A 29 February birthday is shown on 28 February in other years.</div>
+        </div>
+        <div class="tabbar"><div class="on"><i></i>Upcoming</div><div><i></i>People</div><div><i></i>Settings</div></div>
+      </div></div>
+      <figcaption><b>3. Add or edit person.</b> Name and day are the only required fields. The year is optional and the form shows the age it implies. Reminder offsets default from Settings and can be changed per person.</figcaption>
+    </figure>
+
+    <!-- 3b. Share sheet capture -->
+    <figure>
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="status"><span>9:41</span><span>●●● ▲ ▮</span></div>
+        <div class="fakeweb">
+          <div class="bar" style="width:60%"></div>
+          <div class="img"></div>
+          <div class="bar"></div><div class="bar" style="width:85%"></div><div class="bar" style="width:40%"></div>
+        </div>
+        <div class="dim"></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <div class="topnav"><span>Cancel</span><span class="t">Save gift idea</span><span></span></div>
+          <div class="idea" style="background:var(--screen-card);border:1px solid var(--line);border-radius:12px;padding:8px"><i style="background:#b7adcc"></i><div>Pottery wheel starter kit<small>amazon.it</small></div></div>
+          <div class="field"><label>For whom</label><div class="chips"><span class="chip on">Giulia</span><span class="chip">Marta</span><span class="chip">Paolo</span><span class="chip">Search…</span></div></div>
+          <div class="field"><label>Note</label><div class="input ph">She mentioned it in July</div></div>
+          <div class="btn">Save to Giulia's ideas</div>
+          <div class="note" style="text-align:center">Saved on this phone. Works offline.</div>
+        </div>
+      </div></div>
+      <figcaption><b>3b. Share-sheet capture.</b> Sharing a link, photo or text from any app opens this sheet. Recent people come first. Two taps and the idea is on the person's card, all year round. Mobile only; the web app has a paste-a-link field instead.</figcaption>
+    </figure>
+
+    <!-- 4. Settings -->
+    <figure>
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="status"><span>9:41</span><span>●●● ▲ ▮</span></div>
+        <div class="content">
+          <div><h2 class="app-title">Settings</h2></div>
+          <div class="card" style="border-color:var(--accent)"><h4>Privacy</h4>
+            <div class="note" style="margin-bottom:4px">Your dates stay on this phone. No account, no cloud, no analytics, no ads.</div>
+            <div class="toggle-row"><span>Fetch link previews (uses network)</span><span class="tg"></span></div>
+            <div class="toggle-row"><span>Export everything</span><span>›</span></div>
+            <div class="toggle-row"><span>Import from file</span><span>›</span></div>
+          </div>
+          <div class="card"><h4>Language</h4>
+            <div class="chips"><span class="chip on">System · Italiano</span><span class="chip">Italiano</span><span class="chip">English</span></div>
+            <div class="note" style="margin-top:6px">Changing it updates reminders and the widget too.</div>
+          </div>
+          <div class="card"><h4>Default reminders</h4>
+            <div class="note" style="margin-bottom:4px">Birthdays</div>
+            <div class="chips"><span class="chip on">1 week</span><span class="chip on">1 day</span><span class="chip on">On the day</span><span class="chip">2 weeks</span></div>
+            <div class="note" style="margin:6px 0 4px">Parties</div>
+            <div class="chips"><span class="chip on">3 days</span><span class="chip on">On the day</span><span class="chip">2 h before</span></div>
+          </div>
+          <div class="card"><h4>Name days</h4>
+            <div class="toggle-row"><span>Show name days</span><span class="tg on"></span></div>
+            <div class="toggle-row"><span>Calendar</span><b>Italia ›</b></div>
+          </div>
+          <div class="card"><h4>Notifications</h4>
+            <div class="toggle-row"><span>Time of day</span><b>09:00</b></div>
+            <div class="toggle-row"><span>Show age in notification</span><span class="tg on"></span></div>
+          </div>
+        </div>
+        <div class="tabbar"><div><i></i>Upcoming</div><div><i></i>People</div><div class="on"><i></i>Settings</div></div>
+      </div></div>
+      <figcaption><b>4. Settings.</b> The Privacy card comes first and repeats the promise: it holds export, import and the only network switch in the app, off by default. Then language, separate default reminders for birthdays and parties, the name-day calendar and notification time.</figcaption>
+    </figure>
+
+    <!-- 5. Upcoming, Italian -->
+    <figure>
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="status"><span>9:41</span><span>●●● ▲ ▮</span></div>
+        <div class="content">
+          <div><h2 class="app-title">In arrivo</h2><div class="sub">12 persone · il prossimo è oggi</div></div>
+          <div class="group">Oggi</div>
+          <div class="person today"><div class="avatar" style="background:#c8246a">MR</div><div><div class="name">Marta Rossi</div><div class="meta">Compie 34 anni · Sorella</div></div><div class="when"><b>Oggi</b><small>12 ott</small></div></div>
+          <div class="group">Questa settimana</div>
+          <div class="person"><div class="avatar" style="background:#6a4bd8">GB</div><div><div class="name">Giulia Bianchi</div><div class="meta">Compie 29 anni · festa sab 18</div></div><div class="when"><b>3 giorni</b><small>mer 15 ott</small></div></div>
+          <div class="person"><div class="avatar" style="background:#8a5a00">TG</div><div><div class="name">Teresa Galli<span class="kind nd">Onomastico</span></div><div class="meta">Santa Teresa · Zia</div></div><div class="when"><b>3 giorni</b><small>mer 15 ott</small></div></div>
+          <div class="person"><div class="avatar" style="background:#1f8a70">PC</div><div><div class="name">Paolo Conti</div><div class="meta">Compie 41 anni · Lavoro</div></div><div class="when"><b>6 giorni</b><small>sab 18 ott</small></div></div>
+          <div class="person"><div class="avatar" style="background:#6a4bd8">GB</div><div><div class="name">Festa di Giulia<span class="kind">Festa</span></div><div class="meta">20:30 · Trattoria Da Enzo</div></div><div class="when"><b>6 giorni</b><small>sab 18 ott</small></div></div>
+          <div class="group">Questo mese</div>
+          <div class="person"><div class="avatar" style="background:#e8703a">EF</div><div><div class="name">Elena Ferri</div><div class="meta">Età sconosciuta · Vicina</div></div><div class="when"><b>12 giorni</b><small>ven 24 ott</small></div></div>
+          <div class="person"><div class="avatar" style="background:#2f6fde">MN</div><div><div class="name">Marco Neri</div><div class="meta">Compie 7 anni · Nipote</div></div><div class="when"><b>18 giorni</b><small>gio 30 ott</small></div></div>
+        </div>
+        <div class="fab">+</div>
+        <div class="tabbar"><div class="on"><i></i>In arrivo</div><div><i></i>Persone</div><div><i></i>Impostazioni</div></div>
+      </div></div>
+      <figcaption><b>5. Upcoming list in Italian</b> (the default language). Same screen, same data. Group labels, relative days, weekday and month abbreviations and the "compie N anni" plural all come from the Italian catalog and locale, not from code.</figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<section>
+  <h2>Home-screen widgets</h2>
+  <p class="lead">One snapshot feeds the whole set: home screen small, medium and large, the three lock-screen families, StandBy, and the resizable Android widget. The snapshot is already translated, one entry per day, so the native widget has no strings of its own and the day count still updates at midnight without opening the app. The widget shows whichever event comes first, birthday, name day or party. Tapping opens the person.</p>
+  <div class="row">
+    <figure>
+      <div class="homebg">
+        <div class="widget w-small">
+          <div><div class="w-eyebrow">Next birthday</div><div class="w-name">Giulia Bianchi</div></div>
+          <div class="w-days">3<small>days · turns 29</small></div>
+        </div>
+        <div class="widget w-medium">
+          <div style="display:flex;flex-direction:column;justify-content:space-between">
+            <div><div class="w-eyebrow">Next birthday</div><div class="w-name">Giulia Bianchi</div></div>
+            <div class="w-days">3<small>days · Wed 15 Oct · turns 29</small></div>
+          </div>
+          <div class="vsep"></div>
+          <div class="w-list">
+            <div><b>Paolo Conti</b><span>6 d</span></div>
+            <div><b>Elena Ferri</b><span>12 d</span></div>
+            <div><b>Marco Neri</b><span>18 d</span></div>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>iOS, small and medium.</b> Small shows only the next person and the countdown. Medium adds the following three. Both are SwiftUI WidgetKit views fed by the snapshot file in the App Group.</figcaption>
+    </figure>
+    <figure>
+      <div class="homebg" style="background:linear-gradient(145deg,#1f8a70,#2f6fde)">
+        <div class="widget w-android">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div class="w-eyebrow">Compleanni</div><div class="w-eyebrow" style="color:#6b6683">12 ott</div>
+          </div>
+          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin-bottom:10px">
+            <div class="avatar" style="background:#c8246a;width:30px;height:30px;font-size:11px">MR</div>
+            <div><b>Marta Rossi</b><div style="font-size:11px;color:#6b6683">compie 34 anni · Sorella</div></div>
+            <div style="font-weight:800;color:#c8246a">Oggi</div>
+          </div>
+          <div class="w-list" style="color:#1d1a2b">
+            <div><b>Giulia Bianchi</b><span style="color:#6b6683">tra 3 giorni</span></div>
+            <div><b>Paolo Conti</b><span style="color:#6b6683">tra 6 giorni</span></div>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Android, shown in Italian.</b> Resizable widget on a white surface following Material style. Same snapshot data, rendered by a Glance or RemoteViews widget. A daily WorkManager job refreshes it at midnight.</figcaption>
+    </figure>
+    <figure>
+      <div class="lock">
+        <div class="inline">Giulia · 3 giorni</div>
+        <div class="time">9:41</div>
+        <div class="date">domenica 12 ottobre</div>
+        <div class="acc">
+          <div class="circ">3<small>giorni</small></div>
+          <div class="rect"><b>Giulia Bianchi</b><span>Compleanno · tra 3 giorni</span><span> · compie 29</span></div>
+        </div>
+      </div>
+      <figcaption><b>iOS lock screen, shown in Italian.</b> Inline above the clock, circular with the countdown, rectangular with name and kind. Same snapshot, using the short line variant.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <h2>Web app</h2>
+  <p class="lead">Same screens, laid out as a three-column desktop app: navigation, the upcoming list, and the selected person. On narrow browser windows it collapses to the mobile layout. Installable as an offline PWA with IndexedDB storage.</p>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><div class="url">birthdays.app</div><span>Offline ready</span></div>
+    <div class="web-scroll"><div class="web">
+      <div class="side">
+        <div class="brand">Birthdays</div>
+        <div class="nav on">Upcoming</div>
+        <div class="nav">People</div>
+        <div class="nav">Calendar</div>
+        <div class="nav">Settings</div>
+        <div class="spacer"></div>
+        <div class="btn">+ Add person</div>
+        <div class="note" style="margin-top:8px">Stored in this browser. Export a backup from Settings.</div>
+      </div>
+      <div class="main">
+        <div class="head"><h3>Upcoming</h3><div class="search">Search people… <span class="kbd">⌘K</span></div></div>
+        <div class="group">Today</div>
+        <div class="person today"><div class="avatar" style="background:#c8246a;width:32px;height:32px">MR</div><div><div class="name">Marta Rossi</div><div class="meta">Sister</div></div><div class="meta">Sun 12 Oct · turns 34</div><div class="when"><b style="color:#8a5a00">Today</b></div></div>
+        <div class="group">This week</div>
+        <div class="person sel"><div class="avatar" style="background:#6a4bd8;width:32px;height:32px">GB</div><div><div class="name">Giulia Bianchi</div><div class="meta">Friend</div></div><div class="meta">Wed 15 Oct · turns 29</div><div class="when"><b>3 days</b></div></div>
+        <div class="person"><div class="avatar" style="background:#1f8a70;width:32px;height:32px">PC</div><div><div class="name">Paolo Conti</div><div class="meta">Work</div></div><div class="meta">Sat 18 Oct · turns 41</div><div class="when"><b>6 days</b></div></div>
+        <div class="group">This month</div>
+        <div class="person"><div class="avatar" style="background:#e8703a;width:32px;height:32px">EF</div><div><div class="name">Elena Ferri</div><div class="meta">Neighbour</div></div><div class="meta">Fri 24 Oct · age unknown</div><div class="when"><b>12 days</b></div></div>
+        <div class="person"><div class="avatar" style="background:#2f6fde;width:32px;height:32px">MN</div><div><div class="name">Marco Neri</div><div class="meta">Nephew</div></div><div class="meta">Thu 30 Oct · turns 7</div><div class="when"><b>18 days</b></div></div>
+        <div class="group">Later</div>
+        <div class="person"><div class="avatar" style="background:#8a5a00;width:32px;height:32px">SG</div><div><div class="name">Sara Galli</div><div class="meta">Friend</div></div><div class="meta">Tue 3 Nov · turns 30</div><div class="when"><b>22 days</b></div></div>
+      </div>
+      <div class="panel">
+        <div class="hero"><div class="avatar" style="background:#6a4bd8">GB</div><h3 style="margin:0;font-family:var(--display);font-size:18px">Giulia Bianchi</h3><span class="pill">In 3 days · Wed 15 October</span></div>
+        <div class="stat"><div><b>29</b><span>turns</span></div><div><b>1997</b><span>born</span></div><div><b>3</b><span>reminders</span></div></div>
+        <div class="card"><h4>Gift ideas</h4><div class="check"><i></i><span>Pottery class voucher</span></div><div class="check"><i></i><span>The book she mentioned in July</span></div></div>
+        <div class="card"><h4>Celebration plan</h4><div class="check done"><i></i><span>Book table at Trattoria Da Enzo</span></div><div class="check"><i></i><span>Invite Sara and Paolo</span></div><div class="check"><i></i><span>Order the cake</span></div></div>
+        <div class="btn ghost">Edit person</div>
+      </div>
+    </div></div>
+  </div>
+</section>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "cento",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Cento — offline-first, privacy-first birthday reminder app (monorepo)",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "app": "npm run start --workspace apps/app",
+    "web": "npm run web --workspace apps/app"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}

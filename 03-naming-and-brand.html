@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0;font:14px -apple-system,system-ui,sans-serif}img{max-width:100%}</style>
+<title>Birthday App Naming</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,600&family=Manrope:wght@400;600;800&family=Sora:wght@500;700&display=swap">
+<style>
+/* Layout: a brand board. One card per name candidate: mark, app icon, wordmark, palette, taglines, notes. */
+:root {
+  --bg: #f4f2f7; --fg: #1c1826; --muted: #6c6782; --line: #dcd7e6; --card: #ffffff;
+  --accent: #c8246a; --accent-soft: #fbe3ec; --ink: #1c1826; --paper: #ffffff;
+  --display: "Bricolage Grotesque", "Avenir Next", sans-serif;
+  --ui: "Manrope", -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #15131d; --fg: #ecebf2; --muted: #a39eb8; --line: #2e2b3c; --card: #1e1b2a; --accent: #ff5f98; --accent-soft: #3a1a2a; --ink: #ecebf2; --paper: #1e1b2a; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #15131d; --fg: #ecebf2; --muted: #a39eb8; --line: #2e2b3c; --card: #1e1b2a; --accent: #ff5f98; --accent-soft: #3a1a2a; --ink: #ecebf2; --paper: #1e1b2a; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--ui); line-height: 1.5; }
+.wrap { max-width: 1100px; margin: 0 auto; padding-block: 40px 72px; padding-inline: 20px; }
+h1 { font-family: var(--display); font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
+.lead { color: var(--muted); max-width: 66ch; margin: 0; }
+h2 { font-family: var(--display); font-size: 22px; font-weight: 800; margin: 48px 0 6px; letter-spacing: -0.01em; }
+.sub { color: var(--muted); margin: 0 0 20px; max-width: 70ch; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; }
+.brand { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.brand.pick { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.stage { padding: 26px 22px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+.stage .word { font-size: 40px; line-height: 1; letter-spacing: -0.03em; }
+.stage .mark { width: 72px; height: 72px; }
+.icon { width: 60px; height: 60px; border-radius: 15px; display: grid; place-items: center; box-shadow: 0 8px 18px -10px rgba(0,0,0,.5); }
+.icon svg { width: 40px; height: 40px; }
+.body { padding: 18px 22px 22px; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--line); }
+.rank { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 3px 9px; border-radius: 999px; align-self: flex-start; }
+.meaning { font-size: 14px; }
+.meaning b { font-weight: 800; }
+.tag { font-family: var(--display); font-size: 16px; font-weight: 500; line-height: 1.3; }
+.tag span { display: block; color: var(--muted); font-size: 13px; font-family: var(--ui); }
+.swatches { display: flex; gap: 6px; }
+.swatches i { flex: 1; height: 26px; border-radius: 7px; border: 1px solid rgba(0,0,0,.08); }
+dl { margin: 0; display: grid; grid-template-columns: 76px 1fr; gap: 4px 10px; font-size: 13px; }
+dt { color: var(--muted); font-weight: 600; }
+dd { margin: 0; }
+.iconrow { display: flex; gap: 12px; align-items: center; }
+.iconrow small { color: var(--muted); font-size: 12px; }
+
+.alts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.alt { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 13px; }
+.alt b { font-family: var(--display); font-size: 17px; display: block; }
+.alt span { color: var(--muted); }
+.checks { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; }
+.checks ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+@media (max-width: 480px) { .stage .word { font-size: 32px; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Birthday App Naming</h1>
+  <p class="lead">Five name candidates with a logo mark, an app icon, a palette and a tagline in Italian and English. All names are Italian words that an English speaker can read and say, since the app is Italian-first and bilingual. The first one is the recommendation.</p>
+
+  <h2>Candidates</h2>
+  <p class="sub">Each mark is designed to work at 20 px in a widget header and at 1024 px as a store icon, with no gradients and one or two colors.</p>
+
+  <div class="cards">
+
+    <!-- CENTO -->
+    <div class="brand pick">
+      <div class="stage" style="background:#10213f;color:#f6e7b8">
+        <div class="word" style="font-family:'Fraunces',Georgia,serif;font-weight:600">cento</div>
+        <svg class="mark" viewBox="0 0 120 100" aria-label="Cento mark: a candle followed by two rings, reading as 100">
+          <rect x="14" y="40" width="14" height="48" rx="5" fill="#f6e7b8"/>
+          <path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#f0a93b"/>
+          <circle cx="56" cy="64" r="16" fill="none" stroke="#f6e7b8" stroke-width="10"/>
+          <circle cx="98" cy="64" r="16" fill="none" stroke="#f6e7b8" stroke-width="10"/>
+        </svg>
+      </div>
+      <div class="body">
+        <span class="rank">Recommended</span>
+        <div class="meaning"><b>Cento</b> means "one hundred". It comes from the Italian birthday wish <i>cento di questi giorni</i>, "a hundred of these days". Two syllables, no accents, nothing to explain to an English speaker who sees the "100" in the mark.</div>
+        <div class="tag">Cento di questi giorni.<span>A hundred more of these days.</span></div>
+        <div class="iconrow">
+          <div class="icon" style="background:#10213f"><svg viewBox="0 0 120 100"><rect x="14" y="40" width="14" height="48" rx="5" fill="#f6e7b8"/><path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#f0a93b"/><circle cx="56" cy="64" r="16" fill="none" stroke="#f6e7b8" stroke-width="10"/><circle cx="98" cy="64" r="16" fill="none" stroke="#f6e7b8" stroke-width="10"/></svg></div>
+          <div class="icon" style="background:#f6e7b8"><svg viewBox="0 0 120 100"><rect x="14" y="40" width="14" height="48" rx="5" fill="#10213f"/><path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#d9771c"/><circle cx="56" cy="64" r="16" fill="none" stroke="#10213f" stroke-width="10"/><circle cx="98" cy="64" r="16" fill="none" stroke="#10213f" stroke-width="10"/></svg></div>
+          <small>Dark and light icon variants</small>
+        </div>
+        <div class="swatches"><i style="background:#10213f"></i><i style="background:#f6e7b8"></i><i style="background:#f0a93b"></i><i style="background:#c8246a"></i><i style="background:#ffffff"></i></div>
+        <dl>
+          <dt>Mark</dt><dd>A candle as the "1" and two rings as the zeros. The flame is the only warm element.</dd>
+          <dt>Type</dt><dd>Fraunces, a soft serif, lowercase. Feels like a greeting card rather than a utility.</dd>
+          <dt>Palette</dt><dd>Midnight blue and candlelight cream, flame orange as the accent, raspberry for "today".</dd>
+          <dt>Watch out</dt><dd>"Cento" is a common word, so expect name collisions in store searches. Pair it with a qualifier in the store listing, such as "Cento: compleanni".</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- SOFFIO -->
+    <div class="brand">
+      <div class="stage" style="background:#0f6f6a;color:#fff6ef">
+        <div class="word" style="font-family:var(--display);font-weight:800">Soffio</div>
+        <svg class="mark" viewBox="0 0 100 100" aria-label="Soffio mark: a flame bending in a puff of air">
+          <path d="M12 38 h22" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M6 54 h18" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M14 70 h12" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <g transform="rotate(28 62 70)">
+            <path d="M62 14 C 48 36 42 44 42 58 a20 20 0 0 0 40 0 C 82 44 76 36 62 14 Z" fill="#ff7a59"/>
+            <path d="M62 44 C 56 54 54 58 54 64 a8 8 0 0 0 16 0 C 70 58 68 54 62 44 Z" fill="#fff6ef"/>
+          </g>
+        </svg>
+      </div>
+      <div class="body">
+        <span class="rank" style="background:transparent;color:var(--muted);padding:0">Runner-up</span>
+        <div class="meaning"><b>Soffio</b> is "a breath" or "a puff", the moment you blow out the candles. Playful and physical. English speakers read it as "SOF-fee-oh" without trouble.</div>
+        <div class="tag">Un soffio e ci sei.<span>One breath, and you're there.</span></div>
+        <div class="iconrow">
+          <div class="icon" style="background:#0f6f6a"><svg viewBox="0 0 100 100"><path d="M12 38 h22" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M6 54 h18" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M14 70 h12" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/><g transform="rotate(28 62 70)"><path d="M62 14 C 48 36 42 44 42 58 a20 20 0 0 0 40 0 C 82 44 76 36 62 14 Z" fill="#ff7a59"/><path d="M62 44 C 56 54 54 58 54 64 a8 8 0 0 0 16 0 C 70 58 68 54 62 44 Z" fill="#fff6ef"/></g></svg></div>
+          <div class="icon" style="background:#ff7a59"><svg viewBox="0 0 100 100"><path d="M12 38 h22" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M6 54 h18" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M14 70 h12" stroke="#fff6ef" stroke-width="7" stroke-linecap="round" fill="none"/><g transform="rotate(28 62 70)"><path d="M62 14 C 48 36 42 44 42 58 a20 20 0 0 0 40 0 C 82 44 76 36 62 14 Z" fill="#0f6f6a"/><path d="M62 44 C 56 54 54 58 54 64 a8 8 0 0 0 16 0 C 70 58 68 54 62 44 Z" fill="#fff6ef"/></g></svg></div>
+          <small>Teal and coral icon variants</small>
+        </div>
+        <div class="swatches"><i style="background:#0f6f6a"></i><i style="background:#ff7a59"></i><i style="background:#fff6ef"></i><i style="background:#143d3b"></i><i style="background:#ffd166"></i></div>
+        <dl>
+          <dt>Mark</dt><dd>A flame leaning away from three strokes of air. Reads as motion even at widget size.</dd>
+          <dt>Type</dt><dd>Bricolage Grotesque, heavy, capital S. Friendly and modern.</dd>
+          <dt>Palette</dt><dd>Deep teal with coral flame. Unusual for the category, which is mostly pink and purple.</dd>
+          <dt>Watch out</dt><dd>The word has no meaning in English, so the icon has to carry the idea.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- CANDELA -->
+    <div class="brand">
+      <div class="stage" style="background:#faf3e3;color:#2a1b2e">
+        <div class="word" style="font-family:'Sora',sans-serif;font-weight:700;letter-spacing:-0.04em">candela</div>
+        <svg class="mark" viewBox="0 0 100 100" aria-label="Candela mark: a single flame above a dot">
+          <path d="M50 8 C 32 34 24 44 24 60 a26 26 0 0 0 52 0 C 76 44 68 34 50 8 Z" fill="#c8246a"/>
+          <path d="M50 44 C 43 56 40 61 40 68 a10 10 0 0 0 20 0 C 60 61 57 56 50 44 Z" fill="#faf3e3"/>
+          <circle cx="50" cy="94" r="5" fill="#2a1b2e"/>
+        </svg>
+      </div>
+      <div class="body">
+        <div class="meaning"><b>Candela</b> is "candle", and also the SI unit of light. It is the safest name: obvious, warm, and already a near-English word.</div>
+        <div class="tag">Nessun compleanno al buio.<span>No birthday in the dark.</span></div>
+        <div class="iconrow">
+          <div class="icon" style="background:#c8246a"><svg viewBox="0 0 100 100"><path d="M50 8 C 32 34 24 44 24 60 a26 26 0 0 0 52 0 C 76 44 68 34 50 8 Z" fill="#faf3e3"/><path d="M50 44 C 43 56 40 61 40 68 a10 10 0 0 0 20 0 C 60 61 57 56 50 44 Z" fill="#c8246a"/><circle cx="50" cy="94" r="5" fill="#faf3e3"/></svg></div>
+          <div class="icon" style="background:#2a1b2e"><svg viewBox="0 0 100 100"><path d="M50 8 C 32 34 24 44 24 60 a26 26 0 0 0 52 0 C 76 44 68 34 50 8 Z" fill="#ffb347"/><path d="M50 44 C 43 56 40 61 40 68 a10 10 0 0 0 20 0 C 60 61 57 56 50 44 Z" fill="#2a1b2e"/><circle cx="50" cy="94" r="5" fill="#faf3e3"/></svg></div>
+          <small>Raspberry and night icon variants</small>
+        </div>
+        <div class="swatches"><i style="background:#c8246a"></i><i style="background:#2a1b2e"></i><i style="background:#faf3e3"></i><i style="background:#ffb347"></i><i style="background:#ffffff"></i></div>
+        <dl>
+          <dt>Mark</dt><dd>One flame, a dot for the wick. The flame alone is the favicon and widget glyph.</dd>
+          <dt>Type</dt><dd>Sora, geometric and tight. Lowercase to stay soft.</dd>
+          <dt>Palette</dt><dd>Raspberry and plum, with a warm amber for the flame in dark mode.</dd>
+          <dt>Watch out</dt><dd>Most crowded name of the five. Several "Candela" apps exist in unrelated categories, so check trademarks early.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- AUGURI -->
+    <div class="brand">
+      <div class="stage" style="background:#4b2bd6;color:#eaff5f">
+        <div class="word" style="font-family:var(--display);font-weight:800">Auguri</div>
+        <svg class="mark" viewBox="0 0 100 100" aria-label="Auguri mark: a speech bubble with confetti inside">
+          <path d="M14 16 h72 a10 10 0 0 1 10 10 v40 a10 10 0 0 1 -10 10 h-40 l-18 16 v-16 h-14 a10 10 0 0 1 -10 -10 v-40 a10 10 0 0 1 10 -10 z" fill="#eaff5f"/>
+          <circle cx="34" cy="46" r="7" fill="#4b2bd6"/>
+          <path d="M50 38 l12 0 l-6 14 z" fill="#ff5f98"/>
+          <path d="M70 40 c 6 4 0 10 6 14" stroke="#4b2bd6" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="body">
+        <div class="meaning"><b>Auguri</b> is what Italians say on a birthday: "best wishes". It names the outcome of the app, the message you did not forget to send. Strongly Italian in flavor.</div>
+        <div class="tag">Mai più un "scusa, in ritardo".<span>Never another "sorry, I'm late".</span></div>
+        <div class="iconrow">
+          <div class="icon" style="background:#4b2bd6"><svg viewBox="0 0 100 100"><path d="M14 16 h72 a10 10 0 0 1 10 10 v40 a10 10 0 0 1 -10 10 h-40 l-18 16 v-16 h-14 a10 10 0 0 1 -10 -10 v-40 a10 10 0 0 1 10 -10 z" fill="#eaff5f"/><circle cx="34" cy="46" r="7" fill="#4b2bd6"/><path d="M50 38 l12 0 l-6 14 z" fill="#ff5f98"/><path d="M70 40 c 6 4 0 10 6 14" stroke="#4b2bd6" stroke-width="5" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="icon" style="background:#eaff5f"><svg viewBox="0 0 100 100"><path d="M14 16 h72 a10 10 0 0 1 10 10 v40 a10 10 0 0 1 -10 10 h-40 l-18 16 v-16 h-14 a10 10 0 0 1 -10 -10 v-40 a10 10 0 0 1 10 -10 z" fill="#4b2bd6"/><circle cx="34" cy="46" r="7" fill="#eaff5f"/><path d="M50 38 l12 0 l-6 14 z" fill="#ff5f98"/><path d="M70 40 c 6 4 0 10 6 14" stroke="#eaff5f" stroke-width="5" fill="none" stroke-linecap="round"/></svg></div>
+          <small>Violet and lime icon variants</small>
+        </div>
+        <div class="swatches"><i style="background:#4b2bd6"></i><i style="background:#eaff5f"></i><i style="background:#ff5f98"></i><i style="background:#1c1340"></i><i style="background:#ffffff"></i></div>
+        <dl>
+          <dt>Mark</dt><dd>A speech bubble holding three pieces of confetti. The bubble ties it to the "message" idea.</dd>
+          <dt>Type</dt><dd>Bricolage Grotesque, heavy. Loud, like the word itself.</dd>
+          <dt>Palette</dt><dd>Electric violet and lime, the most energetic of the set.</dd>
+          <dt>Watch out</dt><dd>Needs explaining outside Italy. Fine if the English market is secondary.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- FESTA -->
+    <div class="brand">
+      <div class="stage" style="background:#ffffff;color:#1c1826">
+        <div class="word" style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic">Festa</div>
+        <svg class="mark" viewBox="0 0 100 100" aria-label="Festa mark: four pieces of confetti">
+          <rect x="18" y="14" width="16" height="30" rx="4" transform="rotate(-25 26 29)" fill="#c8246a"/>
+          <circle cx="68" cy="26" r="11" fill="#f0a93b"/>
+          <path d="M14 70 l24 -6 l-10 22 z" fill="#2f6fde"/>
+          <path d="M54 62 c 10 -10 14 6 24 -4 c 8 -8 10 6 18 0" stroke="#1f8a70" stroke-width="7" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="body">
+        <div class="meaning"><b>Festa</b> is "party". Known to English speakers through "fiesta" and "festival". The most generic name here, and the one that says the least about reminders.</div>
+        <div class="tag">La festa comincia prima.<span>The party starts earlier.</span></div>
+        <div class="iconrow">
+          <div class="icon" style="background:#ffffff;border:1px solid var(--line)"><svg viewBox="0 0 100 100"><rect x="18" y="14" width="16" height="30" rx="4" transform="rotate(-25 26 29)" fill="#c8246a"/><circle cx="68" cy="26" r="11" fill="#f0a93b"/><path d="M14 70 l24 -6 l-10 22 z" fill="#2f6fde"/><path d="M54 62 c 10 -10 14 6 24 -4 c 8 -8 10 6 18 0" stroke="#1f8a70" stroke-width="7" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="icon" style="background:#1c1826"><svg viewBox="0 0 100 100"><rect x="18" y="14" width="16" height="30" rx="4" transform="rotate(-25 26 29)" fill="#ff5f98"/><circle cx="68" cy="26" r="11" fill="#f0a93b"/><path d="M14 70 l24 -6 l-10 22 z" fill="#6aa2ff"/><path d="M54 62 c 10 -10 14 6 24 -4 c 8 -8 10 6 18 0" stroke="#4dd0a8" stroke-width="7" fill="none" stroke-linecap="round"/></svg></div>
+          <small>White and night icon variants</small>
+        </div>
+        <div class="swatches"><i style="background:#c8246a"></i><i style="background:#f0a93b"></i><i style="background:#2f6fde"></i><i style="background:#1f8a70"></i><i style="background:#ffffff"></i></div>
+        <dl>
+          <dt>Mark</dt><dd>Four confetti shapes in four colors. Cheerful, but it is also what many party apps already use.</dd>
+          <dt>Type</dt><dd>Fraunces italic, to add some character to a plain word.</dd>
+          <dt>Palette</dt><dd>Multi-color on white. Hard to keep consistent across a whole UI.</dd>
+          <dt>Watch out</dt><dd>Very hard to find in store search and almost certainly taken as a domain and trademark.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <h2>Other names considered</h2>
+  <p class="sub">Shorter notes on names that did not make the board, in case one of them resonates.</p>
+  <div class="alts">
+    <div class="alt"><b>Evviva</b><span>"Hooray". Fun, but hard for English speakers to spell after hearing it.</span></div>
+    <div class="alt"><b>Ricorda</b><span>"Remember". Describes the feature, not the feeling. Reads like a to-do app.</span></div>
+    <div class="alt"><b>Tanti</b><span>From "tanti auguri". Short and cute, but meaningless alone.</span></div>
+    <div class="alt"><b>Annata</b><span>"Vintage", as in wine years. Clever for ages, a bit cold for birthdays.</span></div>
+    <div class="alt"><b>Torta</b><span>"Cake". Obvious icon, but it is a food word first and a birthday word second.</span></div>
+    <div class="alt"><b>Fiammella</b><span>"Little flame". Lovely in Italian, four syllables too many in English.</span></div>
+  </div>
+
+  <h2>Before you commit to a name</h2>
+  <div class="checks">
+    <ol>
+      <li>Search the App Store and Google Play for the exact name and the name plus "compleanni" or "birthday". A name is usable if yours can rank for its own exact match.</li>
+      <li>Check the <code>.app</code> and <code>.it</code> domains, plus the handle on the social networks you plan to use. Consistency matters more than owning the <code>.com</code>.</li>
+      <li>Run a trademark search on EUIPO and USPTO in class 9 (software) and class 42 (online services). A plain Italian word is weak as a trademark, so a distinctive mark and a tagline carry the brand.</li>
+      <li>Reserve the bundle identifier early, for example <code>it.yourdomain.cento</code>, since it cannot change after the first store release.</li>
+      <li>Say the name out loud in an English sentence: "Did you add her to Cento?" If it sounds natural, it travels.</li>
+    </ol>
+  </div>
+</div>
+</body>
+</html>

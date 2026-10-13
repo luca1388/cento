@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0;font:14px -apple-system,system-ui,sans-serif}img{max-width:100%}</style>
+<title>Cento Palettes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Manrope:wght@400;600;800&display=swap">
+<style>
+/* Layout: one block per palette: name and mood, a two-panel demo (brand stage + app sample), swatches with hex, contrast line. */
+:root { --bg:#f4f2f7; --fg:#1c1826; --muted:#6c6782; --line:#dcd7e6; --card:#ffffff; --accent:#10213f; --accent-soft:#e6e9f3;
+  --serif:"Fraunces",Georgia,serif; --ui:"Manrope",-apple-system,"Segoe UI",sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#15131d; --fg:#ecebf2; --muted:#a39eb8; --line:#2e2b3c; --card:#1e1b2a; --accent:#f6e7b8; --accent-soft:#2a2d3f; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#15131d; --fg:#ecebf2; --muted:#a39eb8; --line:#2e2b3c; --card:#1e1b2a; --accent:#f6e7b8; --accent-soft:#2a2d3f; color-scheme:dark; }
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ui);line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding-block:40px 72px;padding-inline:20px}
+h1{font-family:var(--serif);font-size:clamp(32px,4vw,46px);font-weight:600;margin:0 0 8px;letter-spacing:-0.02em;text-wrap:balance}
+.lead{color:var(--muted);max-width:66ch;margin:0 0 28px}
+.pal{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:22px;display:flex;flex-direction:column;gap:14px}
+.kind{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pal h3{margin:0;font-family:var(--serif);font-size:28px;font-weight:600;letter-spacing:-0.01em}
+.mood{margin:0;max-width:70ch}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stage{border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.icon{width:64px;height:64px;border-radius:16px;display:grid;place-items:center}
+.icon svg{width:44px;height:44px}
+.word{font-family:var(--serif);font-size:44px;line-height:1;letter-spacing:-0.03em}
+.widget{border-radius:16px;padding:12px 14px;font-size:12px;max-width:260px}
+.eyebrow{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.wname{font-family:var(--serif);font-size:18px;line-height:1.1;margin-top:3px}
+.wdays{font-size:26px;font-weight:800;line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
+.wdays small{font-size:11px;font-weight:700}
+.app{border-radius:14px;padding:16px 14px;display:flex;flex-direction:column;gap:8px;font-size:12px;min-width:0}
+.apptitle{font-family:var(--serif);font-size:22px;line-height:1;margin-bottom:2px}
+.group{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.row{display:grid;grid-template-columns:28px 1fr auto;gap:9px;align-items:center;border:1px solid;border-radius:12px;padding:7px 9px}
+.row i{width:28px;height:28px;border-radius:50%}
+.row b{display:block;font-size:12px} .row span{font-size:10px}
+.row em{font-style:normal;font-weight:800;font-size:11px;padding:3px 8px;border-radius:999px;font-variant-numeric:tabular-nums}
+.btn{margin-top:4px;border-radius:10px;padding:9px;text-align:center;font-weight:800;font-size:12px}
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px}
+.sw{display:flex;flex-direction:column;gap:3px;font-size:11px}
+.sw i{height:34px;border-radius:8px;border:1px solid rgba(0,0,0,.08)}
+.sw b{font-weight:700} .sw span{color:var(--muted);font-family:ui-monospace,Menlo,monospace;font-size:10.5px}
+.contrast{font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.verdict{margin-top:36px;background:var(--accent-soft);border-radius:14px;padding:18px 20px}
+.verdict h2{margin:0 0 8px;font-family:var(--serif);font-size:22px;font-weight:600}
+.verdict ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+@media (max-width:640px){.demo{grid-template-columns:1fr}.word{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Cento Palettes</h1>
+<p class="lead">The current palette plus five alternatives, each applied to the Cento mark, the app icon, the widget and the upcoming list. Roles are the same in every palette: Primary carries the brand, Surface is the app background, Flame is the only warm accent, and Today is a separate semantic color for the highlighted row. Contrast ratios are WCAG; text needs 4.5:1, graphics 3:1.</p>
+
+<div class="pal">
+  <div class="head"><div><span class="kind">Current palette, for reference</span><h3>Mezzanotte</h3></div></div>
+  <p class="mood">Midnight blue and candlelight. Quiet, warm, a little formal. The candle glows because everything around it is dark.</p>
+  <div class="demo">
+    <div class="stage" style="background:#10213f;color:#f6e7b8">
+      <div class="icon" style="background:#10213f;border:1px solid rgba(255,255,255,.18)"><svg viewBox="0 0 120 100"><rect x="14" y="40" width="14" height="48" rx="5" fill="#f6e7b8"/><path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#f0a93b"/><circle cx="56" cy="64" r="16" fill="none" stroke="#f6e7b8" stroke-width="10"/><circle cx="98" cy="64" r="16" fill="none" stroke="#f6e7b8" stroke-width="10"/></svg></div>
+      <div class="word">cento</div>
+      <div class="widget" style="background:#f6e7b8;color:#141c33">
+        <div class="eyebrow" style="color:#10213f">Prossimo compleanno</div>
+        <div class="wname">Giulia Bianchi</div>
+        <div class="wdays">3 <small style="color:#6b7085">giorni · compie 29 anni</small></div>
+      </div>
+    </div>
+    <div class="app" style="background:#f7f4ec;color:#141c33">
+      <div class="apptitle">In arrivo</div>
+      <div class="group" style="color:#6b7085">Oggi</div>
+      <div class="row" style="background:#fbe3ec;border-color:#c8246a"><i style="background:#c8246a"></i><div><b>Marta Rossi</b><span style="color:#6b7085">Compie 34 anni</span></div><em style="background:#c8246a;color:#ffffff">Oggi</em></div>
+      <div class="group" style="color:#6b7085">Questa settimana</div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#10213f"></i><div><b>Giulia Bianchi</b><span style="color:#6b7085">Compie 29 anni</span></div><em style="color:#141c33;background:transparent">3 giorni</em></div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#f0a93b"></i><div><b>Paolo Conti</b><span style="color:#6b7085">Compie 41 anni</span></div><em style="color:#141c33;background:transparent">6 giorni</em></div>
+      <div class="btn" style="background:#10213f;color:#f6e7b8">Aggiungi persona</div>
+    </div>
+  </div>
+  <div class="swatches"><div class="sw"><i style="background:#10213f"></i><b>Primary</b><span>#10213f</span></div><div class="sw"><i style="background:#f6e7b8"></i><b>On primary</b><span>#f6e7b8</span></div><div class="sw"><i style="background:#f7f4ec"></i><b>Surface</b><span>#f7f4ec</span></div><div class="sw"><i style="background:#141c33"></i><b>Ink</b><span>#141c33</span></div><div class="sw"><i style="background:#6b7085"></i><b>Muted</b><span>#6b7085</span></div><div class="sw"><i style="background:#f0a93b"></i><b>Flame</b><span>#f0a93b</span></div><div class="sw"><i style="background:#c8246a"></i><b>Today</b><span>#c8246a</span></div><div class="sw"><i style="background:#fbe3ec"></i><b>Today soft</b><span>#fbe3ec</span></div></div>
+  <div class="contrast">Text on surface 15.4:1 · Wordmark on primary 13.0:1 · Label on today 5.4:1 · Flame on primary 8.0:1</div>
+</div>
+<div class="pal">
+  <div class="head"><div><span class="kind">Alternative 1</span><h3>Pistacchio</h3></div></div>
+  <p class="mood">Forest green and pistachio. Fresh and calm, nothing like the pinks the category usually wears. Apricot flame, coral for today.</p>
+  <div class="demo">
+    <div class="stage" style="background:#1f3d2b;color:#d7ebb5">
+      <div class="icon" style="background:#1f3d2b;border:1px solid rgba(255,255,255,.18)"><svg viewBox="0 0 120 100"><rect x="14" y="40" width="14" height="48" rx="5" fill="#d7ebb5"/><path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#f6a24b"/><circle cx="56" cy="64" r="16" fill="none" stroke="#d7ebb5" stroke-width="10"/><circle cx="98" cy="64" r="16" fill="none" stroke="#d7ebb5" stroke-width="10"/></svg></div>
+      <div class="word">cento</div>
+      <div class="widget" style="background:#d7ebb5;color:#16261d">
+        <div class="eyebrow" style="color:#1f3d2b">Prossimo compleanno</div>
+        <div class="wname">Giulia Bianchi</div>
+        <div class="wdays">3 <small style="color:#66705f">giorni · compie 29 anni</small></div>
+      </div>
+    </div>
+    <div class="app" style="background:#f4f6ee;color:#16261d">
+      <div class="apptitle">In arrivo</div>
+      <div class="group" style="color:#66705f">Oggi</div>
+      <div class="row" style="background:#fde4dd;border-color:#d9442c"><i style="background:#d9442c"></i><div><b>Marta Rossi</b><span style="color:#66705f">Compie 34 anni</span></div><em style="background:#d9442c;color:#ffffff">Oggi</em></div>
+      <div class="group" style="color:#66705f">Questa settimana</div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#1f3d2b"></i><div><b>Giulia Bianchi</b><span style="color:#66705f">Compie 29 anni</span></div><em style="color:#16261d;background:transparent">3 giorni</em></div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#f6a24b"></i><div><b>Paolo Conti</b><span style="color:#66705f">Compie 41 anni</span></div><em style="color:#16261d;background:transparent">6 giorni</em></div>
+      <div class="btn" style="background:#1f3d2b;color:#d7ebb5">Aggiungi persona</div>
+    </div>
+  </div>
+  <div class="swatches"><div class="sw"><i style="background:#1f3d2b"></i><b>Primary</b><span>#1f3d2b</span></div><div class="sw"><i style="background:#d7ebb5"></i><b>On primary</b><span>#d7ebb5</span></div><div class="sw"><i style="background:#f4f6ee"></i><b>Surface</b><span>#f4f6ee</span></div><div class="sw"><i style="background:#16261d"></i><b>Ink</b><span>#16261d</span></div><div class="sw"><i style="background:#66705f"></i><b>Muted</b><span>#66705f</span></div><div class="sw"><i style="background:#f6a24b"></i><b>Flame</b><span>#f6a24b</span></div><div class="sw"><i style="background:#d9442c"></i><b>Today</b><span>#d9442c</span></div><div class="sw"><i style="background:#fde4dd"></i><b>Today soft</b><span>#fde4dd</span></div></div>
+  <div class="contrast">Text on surface 14.5:1 · Wordmark on primary 9.3:1 · Label on today 4.4:1 · Flame on primary 5.8:1</div>
+</div>
+<div class="pal">
+  <div class="head"><div><span class="kind">Alternative 2</span><h3>Lampone</h3></div></div>
+  <p class="mood">Raspberry as the brand color itself. Closest to what people expect from a birthday app, so it reads instantly. Gold flame, plum for today.</p>
+  <div class="demo">
+    <div class="stage" style="background:#b9174f;color:#ffe4ec">
+      <div class="icon" style="background:#b9174f;border:1px solid rgba(255,255,255,.18)"><svg viewBox="0 0 120 100"><rect x="14" y="40" width="14" height="48" rx="5" fill="#ffe4ec"/><path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#ffb627"/><circle cx="56" cy="64" r="16" fill="none" stroke="#ffe4ec" stroke-width="10"/><circle cx="98" cy="64" r="16" fill="none" stroke="#ffe4ec" stroke-width="10"/></svg></div>
+      <div class="word">cento</div>
+      <div class="widget" style="background:#ffe4ec;color:#2b1220">
+        <div class="eyebrow" style="color:#b9174f">Prossimo compleanno</div>
+        <div class="wname">Giulia Bianchi</div>
+        <div class="wdays">3 <small style="color:#7d5868">giorni · compie 29 anni</small></div>
+      </div>
+    </div>
+    <div class="app" style="background:#fff5f8;color:#2b1220">
+      <div class="apptitle">In arrivo</div>
+      <div class="group" style="color:#7d5868">Oggi</div>
+      <div class="row" style="background:#ece0f7;border-color:#5b2a86"><i style="background:#5b2a86"></i><div><b>Marta Rossi</b><span style="color:#7d5868">Compie 34 anni</span></div><em style="background:#5b2a86;color:#ffffff">Oggi</em></div>
+      <div class="group" style="color:#7d5868">Questa settimana</div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#b9174f"></i><div><b>Giulia Bianchi</b><span style="color:#7d5868">Compie 29 anni</span></div><em style="color:#2b1220;background:transparent">3 giorni</em></div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#ffb627"></i><div><b>Paolo Conti</b><span style="color:#7d5868">Compie 41 anni</span></div><em style="color:#2b1220;background:transparent">6 giorni</em></div>
+      <div class="btn" style="background:#b9174f;color:#ffe4ec">Aggiungi persona</div>
+    </div>
+  </div>
+  <div class="swatches"><div class="sw"><i style="background:#b9174f"></i><b>Primary</b><span>#b9174f</span></div><div class="sw"><i style="background:#ffe4ec"></i><b>On primary</b><span>#ffe4ec</span></div><div class="sw"><i style="background:#fff5f8"></i><b>Surface</b><span>#fff5f8</span></div><div class="sw"><i style="background:#2b1220"></i><b>Ink</b><span>#2b1220</span></div><div class="sw"><i style="background:#7d5868"></i><b>Muted</b><span>#7d5868</span></div><div class="sw"><i style="background:#ffb627"></i><b>Flame</b><span>#ffb627</span></div><div class="sw"><i style="background:#5b2a86"></i><b>Today</b><span>#5b2a86</span></div><div class="sw"><i style="background:#ece0f7"></i><b>Today soft</b><span>#ece0f7</span></div></div>
+  <div class="contrast">Text on surface 16.3:1 · Wordmark on primary 5.3:1 · Label on today 9.9:1 · Flame on primary 3.6:1</div>
+</div>
+<div class="pal">
+  <div class="head"><div><span class="kind">Alternative 3</span><h3>Cobalto</h3></div></div>
+  <p class="mood">Cobalt blue with a tangerine flame. Bright and confident, feels like a modern utility. Lemon yellow marks today.</p>
+  <div class="demo">
+    <div class="stage" style="background:#1f3fd6;color:#dbe8ff">
+      <div class="icon" style="background:#1f3fd6;border:1px solid rgba(255,255,255,.18)"><svg viewBox="0 0 120 100"><rect x="14" y="40" width="14" height="48" rx="5" fill="#dbe8ff"/><path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#ff7f2a"/><circle cx="56" cy="64" r="16" fill="none" stroke="#dbe8ff" stroke-width="10"/><circle cx="98" cy="64" r="16" fill="none" stroke="#dbe8ff" stroke-width="10"/></svg></div>
+      <div class="word">cento</div>
+      <div class="widget" style="background:#dbe8ff;color:#0f1a44">
+        <div class="eyebrow" style="color:#1f3fd6">Prossimo compleanno</div>
+        <div class="wname">Giulia Bianchi</div>
+        <div class="wdays">3 <small style="color:#5f6a93">giorni · compie 29 anni</small></div>
+      </div>
+    </div>
+    <div class="app" style="background:#f3f6ff;color:#0f1a44">
+      <div class="apptitle">In arrivo</div>
+      <div class="group" style="color:#5f6a93">Oggi</div>
+      <div class="row" style="background:#fff6cc;border-color:#ffd23f"><i style="background:#ffd23f"></i><div><b>Marta Rossi</b><span style="color:#5f6a93">Compie 34 anni</span></div><em style="background:#ffd23f;color:#0f1a44">Oggi</em></div>
+      <div class="group" style="color:#5f6a93">Questa settimana</div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#1f3fd6"></i><div><b>Giulia Bianchi</b><span style="color:#5f6a93">Compie 29 anni</span></div><em style="color:#0f1a44;background:transparent">3 giorni</em></div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#ff7f2a"></i><div><b>Paolo Conti</b><span style="color:#5f6a93">Compie 41 anni</span></div><em style="color:#0f1a44;background:transparent">6 giorni</em></div>
+      <div class="btn" style="background:#1f3fd6;color:#dbe8ff">Aggiungi persona</div>
+    </div>
+  </div>
+  <div class="swatches"><div class="sw"><i style="background:#1f3fd6"></i><b>Primary</b><span>#1f3fd6</span></div><div class="sw"><i style="background:#dbe8ff"></i><b>On primary</b><span>#dbe8ff</span></div><div class="sw"><i style="background:#f3f6ff"></i><b>Surface</b><span>#f3f6ff</span></div><div class="sw"><i style="background:#0f1a44"></i><b>Ink</b><span>#0f1a44</span></div><div class="sw"><i style="background:#5f6a93"></i><b>Muted</b><span>#5f6a93</span></div><div class="sw"><i style="background:#ff7f2a"></i><b>Flame</b><span>#ff7f2a</span></div><div class="sw"><i style="background:#ffd23f"></i><b>Today</b><span>#ffd23f</span></div><div class="sw"><i style="background:#fff6cc"></i><b>Today soft</b><span>#fff6cc</span></div></div>
+  <div class="contrast">Text on surface 15.5:1 · Wordmark on primary 6.2:1 · Label on today 11.6:1 · Flame on primary 3.0:1</div>
+</div>
+<div class="pal">
+  <div class="head"><div><span class="kind">Alternative 4</span><h3>Grafite</h3></div></div>
+  <p class="mood">Graphite and warm grey with gold. The premium option: restrained, almost monochrome, so the orange flame is the only loud thing on screen.</p>
+  <div class="demo">
+    <div class="stage" style="background:#23242a;color:#ecebe6">
+      <div class="icon" style="background:#23242a;border:1px solid rgba(255,255,255,.18)"><svg viewBox="0 0 120 100"><rect x="14" y="40" width="14" height="48" rx="5" fill="#ecebe6"/><path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#ff8a3d"/><circle cx="56" cy="64" r="16" fill="none" stroke="#ecebe6" stroke-width="10"/><circle cx="98" cy="64" r="16" fill="none" stroke="#ecebe6" stroke-width="10"/></svg></div>
+      <div class="word">cento</div>
+      <div class="widget" style="background:#ecebe6;color:#1a1a1e">
+        <div class="eyebrow" style="color:#23242a">Prossimo compleanno</div>
+        <div class="wname">Giulia Bianchi</div>
+        <div class="wdays">3 <small style="color:#6f6f75">giorni · compie 29 anni</small></div>
+      </div>
+    </div>
+    <div class="app" style="background:#f1f0eb;color:#1a1a1e">
+      <div class="apptitle">In arrivo</div>
+      <div class="group" style="color:#6f6f75">Oggi</div>
+      <div class="row" style="background:#f7edcf;border-color:#d4a93a"><i style="background:#d4a93a"></i><div><b>Marta Rossi</b><span style="color:#6f6f75">Compie 34 anni</span></div><em style="background:#d4a93a;color:#1a1a1e">Oggi</em></div>
+      <div class="group" style="color:#6f6f75">Questa settimana</div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#23242a"></i><div><b>Giulia Bianchi</b><span style="color:#6f6f75">Compie 29 anni</span></div><em style="color:#1a1a1e;background:transparent">3 giorni</em></div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#ff8a3d"></i><div><b>Paolo Conti</b><span style="color:#6f6f75">Compie 41 anni</span></div><em style="color:#1a1a1e;background:transparent">6 giorni</em></div>
+      <div class="btn" style="background:#23242a;color:#ecebe6">Aggiungi persona</div>
+    </div>
+  </div>
+  <div class="swatches"><div class="sw"><i style="background:#23242a"></i><b>Primary</b><span>#23242a</span></div><div class="sw"><i style="background:#ecebe6"></i><b>On primary</b><span>#ecebe6</span></div><div class="sw"><i style="background:#f1f0eb"></i><b>Surface</b><span>#f1f0eb</span></div><div class="sw"><i style="background:#1a1a1e"></i><b>Ink</b><span>#1a1a1e</span></div><div class="sw"><i style="background:#6f6f75"></i><b>Muted</b><span>#6f6f75</span></div><div class="sw"><i style="background:#ff8a3d"></i><b>Flame</b><span>#ff8a3d</span></div><div class="sw"><i style="background:#d4a93a"></i><b>Today</b><span>#d4a93a</span></div><div class="sw"><i style="background:#f7edcf"></i><b>Today soft</b><span>#f7edcf</span></div></div>
+  <div class="contrast">Text on surface 15.2:1 · Wordmark on primary 13.0:1 · Label on today 7.9:1 · Flame on primary 6.6:1</div>
+</div>
+<div class="pal">
+  <div class="head"><div><span class="kind">Alternative 5</span><h3>Pesca</h3></div></div>
+  <p class="mood">Burnt peach with a buttery flame. Warm and friendly, the most "cake" of the set. Teal for today gives it a clear cool counterpoint.</p>
+  <div class="demo">
+    <div class="stage" style="background:#b5451f;color:#ffe9dd">
+      <div class="icon" style="background:#b5451f;border:1px solid rgba(255,255,255,.18)"><svg viewBox="0 0 120 100"><rect x="14" y="40" width="14" height="48" rx="5" fill="#ffe9dd"/><path d="M21 12 C 14 24 10 29 10 36 a11 11 0 0 0 22 0 C 32 29 28 24 21 12 Z" fill="#ffd166"/><circle cx="56" cy="64" r="16" fill="none" stroke="#ffe9dd" stroke-width="10"/><circle cx="98" cy="64" r="16" fill="none" stroke="#ffe9dd" stroke-width="10"/></svg></div>
+      <div class="word">cento</div>
+      <div class="widget" style="background:#ffe9dd;color:#3a1f14">
+        <div class="eyebrow" style="color:#b5451f">Prossimo compleanno</div>
+        <div class="wname">Giulia Bianchi</div>
+        <div class="wdays">3 <small style="color:#8a6a5c">giorni · compie 29 anni</small></div>
+      </div>
+    </div>
+    <div class="app" style="background:#fff3ec;color:#3a1f14">
+      <div class="apptitle">In arrivo</div>
+      <div class="group" style="color:#8a6a5c">Oggi</div>
+      <div class="row" style="background:#d9efec;border-color:#0f6f6a"><i style="background:#0f6f6a"></i><div><b>Marta Rossi</b><span style="color:#8a6a5c">Compie 34 anni</span></div><em style="background:#0f6f6a;color:#ffffff">Oggi</em></div>
+      <div class="group" style="color:#8a6a5c">Questa settimana</div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#b5451f"></i><div><b>Giulia Bianchi</b><span style="color:#8a6a5c">Compie 29 anni</span></div><em style="color:#3a1f14;background:transparent">3 giorni</em></div>
+      <div class="row" style="background:#ffffff;border-color:transparent"><i style="background:#ffd166"></i><div><b>Paolo Conti</b><span style="color:#8a6a5c">Compie 41 anni</span></div><em style="color:#3a1f14;background:transparent">6 giorni</em></div>
+      <div class="btn" style="background:#b5451f;color:#ffe9dd">Aggiungi persona</div>
+    </div>
+  </div>
+  <div class="swatches"><div class="sw"><i style="background:#b5451f"></i><b>Primary</b><span>#b5451f</span></div><div class="sw"><i style="background:#ffe9dd"></i><b>On primary</b><span>#ffe9dd</span></div><div class="sw"><i style="background:#fff3ec"></i><b>Surface</b><span>#fff3ec</span></div><div class="sw"><i style="background:#3a1f14"></i><b>Ink</b><span>#3a1f14</span></div><div class="sw"><i style="background:#8a6a5c"></i><b>Muted</b><span>#8a6a5c</span></div><div class="sw"><i style="background:#ffd166"></i><b>Flame</b><span>#ffd166</span></div><div class="sw"><i style="background:#0f6f6a"></i><b>Today</b><span>#0f6f6a</span></div><div class="sw"><i style="background:#d9efec"></i><b>Today soft</b><span>#d9efec</span></div></div>
+  <div class="contrast">Text on surface 13.9:1 · Wordmark on primary 4.7:1 · Label on today 6.0:1 · Flame on primary 3.8:1</div>
+</div>
+<div class="verdict">
+<h2>How to choose</h2>
+<ul>
+<li><b>Mezzanotte</b> stays the strongest match for the name: the "hundred days" wish is a warm, slightly solemn thing, and a candle reads best against dark blue. Highest contrast of the set.</li>
+<li><b>Pistacchio</b> is the pick if you want to stand apart from every other birthday app on the store shelf while keeping the same quiet tone.</li>
+<li><b>Lampone</b> is the pick if instant recognition matters more than distinctiveness. It is what people expect, which is both its strength and its weakness.</li>
+<li><b>Cobalto</b> and <b>Grafite</b> move the app toward "utility" and "premium". Good if the audience is adults organizing events rather than families.</li>
+<li><b>Pesca</b> is the friendliest, best for a family audience, and the weakest on contrast, so its primary cannot get any lighter.</li>
+<li>In dark mode every palette uses Primary as the surface and On-primary as the text, which is why those two are tested against each other above.</li>
+</ul>
+</div>
+</div>
+
+</body>
+</html>
