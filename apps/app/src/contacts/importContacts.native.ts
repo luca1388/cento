@@ -1,4 +1,4 @@
-import * as Contacts from 'expo-contacts';
+import * as Contacts from 'expo-contacts/legacy';
 import { formatBirthDate, isValidMonthDay } from '@cento/core';
 
 export interface ContactCandidate {

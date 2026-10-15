@@ -271,7 +271,9 @@ export default function SettingsScreen() {
           <SectionLabel>{t('settings.data')}</SectionLabel>
           <Body muted>{t('settings.data.count', { count: people.length })}</Body>
           <Row>
-            <Button label={t('settings.data.sample')} variant="secondary" onPress={() => void addSample()} style={{ flex: 1 }} />
+            {__DEV__ ? (
+              <Button label={t('settings.data.sample')} variant="secondary" onPress={() => void addSample()} style={{ flex: 1 }} />
+            ) : null}
             <Button
               label={t('settings.data.clear')}
               variant="danger"

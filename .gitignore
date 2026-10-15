@@ -23,3 +23,5 @@ yarn-error.*
 
 # macOS
 .DS_Store
+
+.idea/

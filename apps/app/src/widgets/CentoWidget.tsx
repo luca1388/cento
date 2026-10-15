@@ -26,6 +26,8 @@ function isoToday(): string {
  * iOS small / medium / large. It knows nothing about birthdays: every string comes from the snapshot.
  */
 export function CentoWidget({ snapshot, width, height, today = isoToday() }: Props) {
+  'use no memo';
+
   const day = dayEntry(snapshot, today);
   const items = day?.items ?? [];
   const tier = width < 200 ? 'small' : height < 200 ? 'medium' : 'large';
@@ -64,7 +66,7 @@ export function CentoWidget({ snapshot, width, height, today = isoToday() }: Pro
           style={{ flexDirection: 'row', marginTop: 8, alignItems: 'center' }}
         >
           <FlexWidget style={{ flex: 1 }}>
-            <TextWidget text={item.name} style={{ fontSize: 13, color: palette.onPrimary, fontWeight: '700' }} maxLines={1} />
+            <TextWidget text={`${item.name} `} style={{ fontSize: 13, color: palette.onPrimary, fontWeight: '700' }} maxLines={1} />
           </FlexWidget>
           <TextWidget text={item.short.split(' · ')[1] ?? item.short} style={{ fontSize: 12, color: '#dfe3ee' }} maxLines={1} />
         </FlexWidget>

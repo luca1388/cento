@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Alert, Image, Linking, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
-import { ageOn, buildUpcomingEvents, parseBirthDate, parseISODate, todayISO, type GiftIdea } from '@cento/core';
+import { ageOn, buildUpcomingEvents, parseBirthDate, parseISODate, todayISO } from '@cento/core';
 import { Avatar, Body, Button, Card, Chip, Row, SectionLabel, Screen } from '@/components/ui';
 import { useData } from '@/storage/DataProvider';
 import { useT } from '@/i18n/useT';
@@ -14,7 +14,7 @@ export default function PersonDetailScreen() {
   const theme = useTheme();
   const t = useT();
   const { locale, dateFnsLocale } = useLocale();
-  const { people, celebrations, giftIdeas, giftRecords, settings, deletePerson, saveGiftIdea, deleteGiftIdea } = useData();
+  const { people, celebrations, giftIdeas, giftRecords, settings, deletePerson, deleteGiftIdea } = useData();
   const person = people.find((p) => p.id === id);
   const today = todayISO();
 
@@ -54,8 +54,6 @@ export default function PersonDetailScreen() {
       { text: t('common.delete'), style: 'destructive', onPress: run },
     ]);
   }
-
-  const setStatus = (g: GiftIdea, status: GiftIdea['status']) => void saveGiftIdea({ ...g, status });
 
   return (
     <Screen>
@@ -192,19 +190,24 @@ export default function PersonDetailScreen() {
                     </Pressable>
                   ) : null}
                   {g.note ? <Text style={{ fontSize: 13, color: theme.muted }}>{g.note}</Text> : null}
+                  {g.participantIds?.length ? (
+                    <Text style={{ fontSize: 12, color: theme.muted }}>
+                      {t('gift.participants')}: {g.participantIds.map((participantId) => people.find((p) => p.id === participantId)?.name).filter(Boolean).join(', ')}
+                    </Text>
+                  ) : null}
+                  {g.paidParticipantIds?.length ? (
+                    <Text style={{ fontSize: 12, color: theme.muted }}>
+                      {t('gift.paid')}: {g.paidParticipantIds.map((participantId) => people.find((p) => p.id === participantId)?.name).filter(Boolean).join(', ')}
+                    </Text>
+                  ) : null}
+                  {g.externalContributors?.length ? (
+                    <Text style={{ fontSize: 12, color: theme.muted }}>
+                      {t(g.participantIds?.length ? 'gift.externalParticipants' : 'gift.participants')}: {g.externalContributors.map((contributor) => `${contributor.name} (${contributor.paid ? t('gift.paidStatus') : t('gift.unpaidStatus')})`).join(', ')}
+                    </Text>
+                  ) : null}
                 </View>
-                <Chip
-                  label={t(`gift.status.${g.status}`)}
-                  tone={g.status === 'bought' ? 'today' : 'accent'}
-                  selected={g.status === 'bought'}
-                />
               </Row>
               <Row style={{ flexWrap: 'wrap' }}>
-                {g.status === 'idea' ? (
-                  <Chip label={t('gift.markBought')} onPress={() => setStatus(g, 'bought')} />
-                ) : (
-                  <Chip label={t('gift.status.idea')} onPress={() => setStatus(g, 'idea')} />
-                )}
                 <Chip
                   label={t('gift.markGiven')}
                   onPress={() => router.push({ pathname: '/person/[id]/record', params: { id: person.id, ideaId: g.id } })}

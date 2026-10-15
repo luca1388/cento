@@ -13,7 +13,11 @@ async function handler(props: WidgetTaskHandlerProps) {
     case 'WIDGET_ADDED':
     case 'WIDGET_UPDATE':
     case 'WIDGET_RESIZED':
-      props.renderWidget(<CentoWidget snapshot={snapshot} width={props.widgetInfo.width} height={props.widgetInfo.height} />);
+      props.renderWidget(React.createElement(CentoWidget, {
+        snapshot,
+        width: props.widgetInfo.width,
+        height: props.widgetInfo.height,
+      }));
       break;
     default:
       break;

@@ -30,10 +30,22 @@ export interface Person {
 export type GiftIdeaSource = 'share' | 'manual';
 export type GiftIdeaStatus = 'idea' | 'bought' | 'given';
 
+export interface ExternalGiftContributor {
+  id: string;
+  name: string;
+  paid: boolean;
+}
+
 export interface GiftIdea {
   id: string;
   personId: string;
   title: string;
+  /** People in the app who are contributing to this gift. */
+  participantIds?: string[];
+  /** Contributing people who have paid; always a subset of participantIds. */
+  paidParticipantIds?: string[];
+  /** Contributors by name who are not saved as Cento people. */
+  externalContributors?: ExternalGiftContributor[];
   note?: string;
   url?: string | null;
   imageUri?: string | null;
