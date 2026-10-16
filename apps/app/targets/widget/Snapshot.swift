@@ -12,6 +12,51 @@ struct WidgetDay: Decodable {
     let date: String
     let headline: String
     let items: [WidgetItem]
+    let birthdayWidget: BirthdayWidgetModel?
+}
+
+struct BirthdayWidgetModel: Decodable {
+    let state: String
+    let hero: BirthdayWidgetHero?
+    let upcoming: [BirthdayWidgetUpcoming]
+    let monthRemainingCount: Int
+    let monthLabel: String
+    let monthFooter: String
+    let sectionNext: String
+    let sectionNextPlural: String
+    let emptyTitle: String
+    let emptyHint: String
+    let emptyReadHint: String
+}
+
+struct BirthdayWidgetHero: Decodable {
+    let daysLeft: Int
+    let relativeLabel: String
+    let dateLabel: String
+    let ringProgress: Double
+    let totalCount: Int
+    let countLabel: String
+    let othersLabel: String
+    let ringUnit: String
+    let people: [WidgetPerson]
+    let hiddenCount: Int
+}
+
+struct BirthdayWidgetUpcoming: Decodable, Identifiable {
+    let person: WidgetPerson
+    let dateLabel: String
+    let daysLeft: Int
+    let daysUnit: String
+    var id: String { person.id }
+}
+
+struct WidgetPerson: Decodable, Identifiable {
+    let id: String
+    let name: String
+    let initial: String
+    let avatarColor: String
+    let turningAge: Int?
+    let ageLabel: String?
 }
 
 struct WidgetItem: Decodable, Identifiable {

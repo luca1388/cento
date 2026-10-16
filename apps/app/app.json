@@ -92,7 +92,7 @@
             {
               "name": "Cento",
               "label": "Cento",
-              "description": "Prossimi compleanni, onomastici e feste",
+              "description": "Prossimi compleanni",
               "minWidth": "110dp",
               "minHeight": "110dp",
               "targetCellWidth": 2,

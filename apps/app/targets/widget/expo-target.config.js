@@ -6,12 +6,12 @@ module.exports = {
   bundleIdentifier: '.widget',
   deploymentTarget: '17.0',
   colors: {
-    $widgetBackground: '#10213f',
-    $accent: '#f6e7b8',
-    primary: '#10213f',
-    onPrimary: '#f6e7b8',
-    muted: '#a9b0c6',
-    flame: '#f0a93b',
+    $widgetBackground: '#14203F',
+    $accent: '#F5C66D',
+    primary: '#14203F',
+    onPrimary: '#F4E7C2',
+    muted: '#A9B3CF',
+    flame: '#F5C66D',
   },
   entitlements: {
     'com.apple.security.application-groups': ['group.app.cento'],

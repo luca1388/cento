@@ -1,6 +1,7 @@
 import { addDays, daysBetween } from './dates';
 import { buildUpcomingEvents, type BuildEventsOptions } from './events';
 import { relativeDays, type Translate } from './relative';
+import { buildBirthdayWidgetModel, type BirthdayWidgetModel } from './birthdayWidget';
 import type { EventKind, ISODate, Person } from './types';
 
 /**
@@ -25,6 +26,7 @@ export interface WidgetDay {
   date: ISODate;
   headline: string;
   items: WidgetItem[];
+  birthdayWidget: BirthdayWidgetModel;
 }
 
 export interface WidgetSnapshot {
@@ -37,6 +39,8 @@ export interface SnapshotFormatters {
   t: Translate;
   /** Short localized date, e.g. "sab 18 ott". */
   formatDate: (date: ISODate) => string;
+  formatWidgetDate?: (date: ISODate) => string;
+  formatWidgetMonth?: (date: ISODate) => string;
   locale: string;
 }
 
@@ -89,7 +93,19 @@ export function buildWidgetSnapshot(people: Person[], fmt: SnapshotFormatters, o
         ? fmt.t('widget.headlineCelebration', { name: first.name.split(/\s+/)[0], date: fmt.formatDate(date) })
         : fmt.t('widget.headlineNext')
       : fmt.t('widget.headlineEmpty');
-    days.push({ date, headline, items });
+    days.push({
+      date,
+      headline,
+      items,
+      birthdayWidget: buildBirthdayWidgetModel(people, {
+        today: date,
+        locale: fmt.locale,
+        t: fmt.t,
+        formatDate: fmt.formatWidgetDate ?? fmt.formatDate,
+        formatMonth: fmt.formatWidgetMonth,
+        feb29Policy: opts.feb29Policy,
+      }),
+    });
   }
 
   return { locale: fmt.locale, generatedAt: opts.today, days };

@@ -4,6 +4,7 @@ export * from './events';
 export * from './relative';
 export * from './namedays';
 export * from './snapshot';
+export * from './birthdayWidget';
 export * from './ids';
 export * from './backup';
 export * from './prompts';

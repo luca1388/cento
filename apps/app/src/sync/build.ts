@@ -30,7 +30,9 @@ export function buildDerived(input: SyncInput): { snapshot: WidgetSnapshot; plan
     includeNameDays: input.settings.showNameDays,
   };
   const formatDate = (d: string) => formatShortDate(d, input.dateFnsLocale);
-  const snapshot = buildWidgetSnapshot(input.people, { t: input.t, formatDate, locale: input.locale }, common);
+  const formatWidgetDate = (d: string) => new Intl.DateTimeFormat(input.locale, { day: 'numeric', month: 'long' }).format(new Date(`${d}T12:00:00`));
+  const formatWidgetMonth = (d: string) => new Intl.DateTimeFormat(input.locale, { month: 'long' }).format(new Date(`${d}T12:00:00`));
+  const snapshot = buildWidgetSnapshot(input.people, { t: input.t, formatDate, formatWidgetDate, formatWidgetMonth, locale: input.locale }, common);
   const plan = input.settings.notificationsEnabled
     ? planNotifications(input.people, {
         ...common,
