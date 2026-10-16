@@ -1,8 +1,9 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { router } from 'expo-router';
+import { CakeSlice } from 'lucide-react-native';
 import { relativeDays, type UpcomingEvent } from '@cento/core';
-import { Avatar, Glyph } from './ui';
+import { Avatar } from './ui';
 import { radius, space, useTheme } from '@/theme';
 import { useT } from '@/i18n/useT';
 import { useLocale } from '@/i18n/LocaleProvider';
@@ -71,7 +72,7 @@ export function EventRow({ event }: { event: UpcomingEvent }) {
           </Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 6 }}>
-          <Glyph kind={event.kind} />
+          {event.kind === 'birthday' ? <CakeSlice size={16} color={theme.flame} /> : null}
           <Text style={{ flex: 1, flexShrink: 1, fontSize: 12, color: theme.muted }}>
             {formatShortDate(event.date, dateFnsLocale)} · {detail}
             {event.milestone ? ` · ${t('event.milestone')}` : ''}

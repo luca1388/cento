@@ -242,16 +242,3 @@ export function SettingRow({
   );
 }
 
-export function Glyph({ kind }: { kind: 'birthday' | 'nameday' | 'celebration' }) {
-  const theme = useTheme();
-  const color = kind === 'birthday' ? theme.flame : kind === 'nameday' ? theme.muted : theme.accent;
-  const letter = kind === 'birthday' ? 'B' : kind === 'nameday' ? 'N' : 'P';
-  return (
-    <View
-      accessibilityElementsHidden
-      style={{ width: 20, height: 20, borderRadius: 6, backgroundColor: theme.accentSoft, alignItems: 'center', justifyContent: 'center' }}
-    >
-      <Text style={{ color, fontSize: 11, fontFamily: 'Georgia', fontWeight: '700' }}>{letter}</Text>
-    </View>
-  );
-}
