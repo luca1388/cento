@@ -23,13 +23,13 @@ This is the headline of the product, not a technical detail. Every other feature
 - **Your dates never leave your phone.** No account, no sign-up, no server, no cloud. The app works with the network switched off, forever.
 - **Nothing is collected.** No analytics, no crash-reporting SDK that phones home, no ads, no third-party SDKs with network access. The App Store privacy label reads "Data Not Collected" and the Play Data safety section says the same.
 - **You own the data.** Export everything (people, ideas, history) as JSON and ICS at any time; import it back on any device, including the web app.
-- **Network is the exception and always optional.** The only feature that ever touches the network is the gift-idea link preview (page title and image). It is off by default, explained in one sentence when first offered, and the feature works without it.
+- **No app feature makes network requests.** The service worker only caches same-origin requests for the installable web app.
 - **No permission the feature does not need.** Contacts access only when the user taps Import, notifications only when they enable reminders, photos only when they attach one.
 
 How it shows up for the user:
 - Store listing first line: *"I tuoi compleanni restano sul tuo telefono. Nessun account, nessun cloud, nessuna pubblicità."* / *"Your birthdays stay on your phone. No account, no cloud, no ads."*
 - Onboarding screen one says the same in one sentence, with the Import button under it.
-- Settings opens with a "Privacy" card that repeats the promise and holds Export, Import and the link-preview switch.
+- Settings opens with a "Privacy" card that repeats the promise and holds Export, Import and contacts import.
 - Privacy policy fits on one screen and is bundled in the app, readable offline.
 
 Positioning: the phone already reminds people of birthdays. Cento owns what happens *after* the reminder: the gift, the party, and the Italian dates other apps ignore, and does it without ever asking for your data. Five features carry that positioning and are part of v1:
@@ -99,12 +99,12 @@ Derived per person (never stored):
 ### Screens (shared across mobile and web)
 
 1. **Upcoming list** — all events sorted by days until, grouped into Today / This week / This month / Later. Each row: name, date, days left, and a kind glyph: cake for birthday ("turns N"), small flame for name day, confetti for a celebration ("Giulia's party · Sat 18 Oct"). Name days can be hidden with a filter chip.
-2. **Person detail** — birthday and name day at the top, then the celebration card for this year (date, place, checklist, its own reminders), gift ideas (with link previews and idea / bought / given status), gift history by year, notes.
+2. **Person detail** — birthday and name day at the top, then the celebration card for this year (date, place, checklist, its own reminders), gift ideas (with idea / bought / given status), gift history by year, notes.
 3. **Add / edit person** — plus import from device contacts. When a first name matches the saints calendar the name day is pre-filled with a "change date" link.
 4. **Celebration editor** — opened from the person detail: date (defaults to the birthday, usually moved to the nearest weekend), time, place, checklist, reminder offsets. One per year; last year's checklist can be copied.
 5. **Save gift idea (share sheet)** — the screen that opens when something is shared into Cento from another app: a preview of the link, photo or text, a person picker with recent people first, an optional note, Save. Two taps from any app.
 6. **"What did you give?" prompt** — the day after a birthday or celebration, a card at the top of the upcoming list (and one local notification) asks what was given. Picking an idea marks it given and creates the history record; "nothing" or "skip" dismisses it.
-7. **Settings** — a Privacy card first (the promise, Export, Import, link-preview switch), then language (System / Italiano / English), name days on/off and calendar, default reminder lead times for birthdays and for celebrations, notification time of day, widget options, export/import backup.
+7. **Settings** — a Privacy card first (the promise, Export, Import, contacts import), then language (System / Italiano / English), name days on/off and calendar, default reminder lead times for birthdays and for celebrations, notification time of day, widget options, export/import backup.
 
 ### Edge cases (handled in the shared core package)
 
@@ -130,7 +130,7 @@ Derived per person (never stored):
 ### Offline-only storage (no server)
 
 Engineering rules that keep the main feature true:
-- The app has no network layer except the optional link-preview fetch, which lives in one module behind the Settings switch. A lint rule flags any other `fetch` or networking import.
+- App source makes no network requests. The web service worker only caches same-origin resources.
 - No analytics or remote crash reporting. Crash logs stay on device and can be exported by the user if they want to report a bug.
 - Dependencies are reviewed for network access before being added; SDKs that phone home are rejected.
 - The release checklist includes verifying the App Store privacy label and Play Data safety form against the actual binary.
@@ -150,7 +150,7 @@ Engineering rules that keep the main feature true:
 
 - Library: **expo-share-intent**. It adds the iOS Share Extension target and the Android `ACTION_SEND` / `SEND_MULTIPLE` intent filters through a config plugin, and opens the app with the shared payload (URL, text, images). No custom native code.
 - On open the app routes to the "Save gift idea" screen with the payload already parsed. The person picker lists recent people first, then everyone alphabetically, with a search field.
-- Everything is saved offline immediately: title defaults to the page title if the share payload carries one, otherwise to the URL host. Link previews (page title and image fetched from the web) are **off by default** and switched on in Settings → Privacy; when on and online, the app fetches them once and stores them locally. The feature never depends on the fetch.
+- Everything is saved offline immediately: title uses the page title if the share payload carries one, otherwise the URL host. The app does not fetch page metadata.
 - Shared photos are copied into the app's document directory so the idea survives the original being deleted.
 - The share extension on iOS shows the app name and icon in the share sheet; the store listing should mention "Save gift ideas from Safari, Instagram or Amazon" since this is the main hook.
 

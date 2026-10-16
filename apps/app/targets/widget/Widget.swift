@@ -67,6 +67,7 @@ struct CentoWidgetView: View {
         case .systemLarge, .systemExtraLarge: list(limit: 7)
         default: small
         }
+        .widgetURL(URL(string: "cento://"))
     }
 
     private var first: WidgetItem? { entry.items.first }
@@ -85,20 +86,17 @@ struct CentoWidgetView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .widgetURL(URL(string: first?.deepLink ?? "cento://"))
     }
 
     private func list(limit: Int) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(headline).font(.caption2.weight(.bold)).foregroundStyle(Color("muted")).lineLimit(1)
             ForEach(Array(entry.items.prefix(limit))) { item in
-                Link(destination: URL(string: item.deepLink)!) {
-                    HStack(spacing: 8) {
-                        Image(systemName: item.glyph).foregroundStyle(Color("flame")).font(.caption)
-                        Text(item.name).font(.subheadline.weight(.semibold)).foregroundStyle(Color("onPrimary")).lineLimit(1)
-                        Spacer()
-                        Text(item.countdown).font(.caption.monospacedDigit()).foregroundStyle(Color("onPrimary").opacity(0.85)).lineLimit(1)
-                    }
+                HStack(spacing: 8) {
+                    Image(systemName: item.glyph).foregroundStyle(Color("flame")).font(.caption)
+                    Text(item.name).font(.subheadline.weight(.semibold)).foregroundStyle(Color("onPrimary")).lineLimit(1)
+                    Spacer()
+                    Text(item.countdown).font(.caption.monospacedDigit()).foregroundStyle(Color("onPrimary").opacity(0.85)).lineLimit(1)
                 }
             }
             Spacer(minLength: 0)
@@ -114,7 +112,6 @@ struct CentoWidgetView: View {
                 Text(first.map { $0.countdown.components(separatedBy: " ").first ?? "" } ?? "—").font(.title3.weight(.bold).monospacedDigit())
             }
         }
-        .widgetURL(URL(string: first?.deepLink ?? "cento://"))
     }
 
     private var rectangular: some View {
@@ -129,12 +126,9 @@ struct CentoWidgetView: View {
                 Text(headline).font(.caption)
             }
         }
-        .widgetURL(URL(string: first?.deepLink ?? "cento://"))
     }
 
-    private var inline: some View {
-        Text(first?.short ?? headline).widgetURL(URL(string: first?.deepLink ?? "cento://"))
-    }
+    private var inline: some View { Text(first?.short ?? headline) }
 }
 
 // MARK: - Widget

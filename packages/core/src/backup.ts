@@ -80,7 +80,14 @@ export function parseBackup(text: string): BackupData {
   const giftIdeas = arr('giftIdeas').filter(
     (g): g is GiftIdea =>
       isRecord(g) && typeof g.id === 'string' && typeof g.personId === 'string' && ids.has(g.personId) && typeof g.title === 'string',
-  );
+  ).map((gift) => {
+    const { participantIds, paidParticipantIds, externalContributors, ...simpleGift } = gift as GiftIdea & {
+      participantIds?: unknown;
+      paidParticipantIds?: unknown;
+      externalContributors?: unknown;
+    };
+    return simpleGift;
+  });
   const giftRecords = arr('giftRecords').filter(
     (r): r is GiftRecord =>
       isRecord(r) &&

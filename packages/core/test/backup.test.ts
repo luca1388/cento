@@ -32,6 +32,37 @@ describe('backup', () => {
     expect(parseBackup(text).celebrations).toEqual([]);
   });
 
+  it('drops legacy gift contributor fields from backups', () => {
+    const text = JSON.stringify({
+      app: 'cento',
+      version: 1,
+      exportedAt: '2026-10-16T00:00:00Z',
+      people: [person],
+      celebrations: [],
+      giftIdeas: [{
+        id: 'g1',
+        personId: 'p1',
+        title: 'Book',
+        participantIds: ['p2'],
+        paidParticipantIds: ['p2'],
+        externalContributors: [{ id: 'c1', name: 'Alex', paid: true }],
+        source: 'manual',
+        status: 'idea',
+        createdAt: '2026-10-16T00:00:00Z',
+      }],
+      giftRecords: [],
+    });
+
+    expect(parseBackup(text).giftIdeas).toEqual([{
+      id: 'g1',
+      personId: 'p1',
+      title: 'Book',
+      source: 'manual',
+      status: 'idea',
+      createdAt: '2026-10-16T00:00:00Z',
+    }]);
+  });
+
   it('builds a yearly-recurring ICS', () => {
     const ics = buildICS(
       {

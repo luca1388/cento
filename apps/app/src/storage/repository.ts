@@ -6,7 +6,6 @@ export interface Settings {
   showNameDays: boolean;
   nameDayCountry: NameDayCountry;
   feb29Policy: Feb29Policy;
-  linkPreview: boolean;
   defaultBirthdayOffsets: number[];
   defaultCelebrationOffsets: number[];
   /** HH:MM local time at which reminders fire. */
@@ -23,7 +22,6 @@ export const DEFAULT_SETTINGS: Settings = {
   showNameDays: true,
   nameDayCountry: 'it',
   feb29Policy: 'feb28',
-  linkPreview: false,
   defaultBirthdayOffsets: [7, 1, 0],
   defaultCelebrationOffsets: [3, 0],
   notificationTime: '09:00',
@@ -71,5 +69,16 @@ export interface Repository {
 }
 
 export function mergeSettings(raw: Partial<Settings> | null | undefined): Settings {
-  return { ...DEFAULT_SETTINGS, ...(raw ?? {}) };
+  const settings = { ...DEFAULT_SETTINGS, ...(raw ?? {}) } as Settings & { linkPreview?: unknown };
+  delete settings.linkPreview;
+  return settings;
+}
+
+export function withoutGiftContributors(idea: GiftIdea): GiftIdea {
+  const { participantIds, paidParticipantIds, externalContributors, ...simpleIdea } = idea as GiftIdea & {
+    participantIds?: unknown;
+    paidParticipantIds?: unknown;
+    externalContributors?: unknown;
+  };
+  return simpleIdea;
 }

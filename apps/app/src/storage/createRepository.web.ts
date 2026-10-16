@@ -1,5 +1,5 @@
 import type { BackupData, Celebration, GiftIdea, GiftRecord, Person } from '@cento/core';
-import { DEFAULT_SETTINGS, mergeSettings, type ImportMode, type Repository, type Settings } from './repository';
+import { DEFAULT_SETTINGS, mergeSettings, withoutGiftContributors, type ImportMode, type Repository, type Settings } from './repository';
 
 const DB_NAME = 'cento';
 const DB_VERSION = 1;
@@ -117,11 +117,11 @@ class IndexedDbRepository implements Repository {
 
   async listGiftIdeas(personId?: string): Promise<GiftIdea[]> {
     const list = personId ? await this.byPerson<GiftIdea>('gift_ideas', personId) : await this.all<GiftIdea>('gift_ideas');
-    return list.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return list.map(withoutGiftContributors).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   }
 
   saveGiftIdea(g: GiftIdea): Promise<void> {
-    return this.put('gift_ideas', g);
+    return this.put('gift_ideas', withoutGiftContributors(g));
   }
 
   deleteGiftIdea(id: string): Promise<void> {
@@ -154,7 +154,7 @@ class IndexedDbRepository implements Repository {
     if (mode === 'replace') for (const n of names) tx.objectStore(n).clear();
     for (const p of data.people) tx.objectStore('people').put(p);
     for (const c of data.celebrations) tx.objectStore('celebrations').put(c);
-    for (const g of data.giftIdeas) tx.objectStore('gift_ideas').put(g);
+    for (const g of data.giftIdeas) tx.objectStore('gift_ideas').put(withoutGiftContributors(g));
     for (const r of data.giftRecords) tx.objectStore('gift_records').put(r);
     await done(tx);
   }

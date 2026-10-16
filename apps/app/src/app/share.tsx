@@ -8,7 +8,7 @@ import { Avatar, Body, Button, Card, Field, Row, Screen, SectionLabel } from '@/
 import { useData } from '@/storage/DataProvider';
 import { useT } from '@/i18n/useT';
 import { radius, space, useTheme } from '@/theme';
-import { extractUrl, fetchLinkPreview, hostOf } from '@/network/linkPreview';
+import { extractUrl, hostOf } from '@/utils/links';
 import { keepImage } from '@/backup/files';
 
 /**
@@ -18,7 +18,7 @@ import { keepImage } from '@/backup/files';
 export default function ShareScreen() {
   const theme = useTheme();
   const t = useT();
-  const { people, giftIdeas, settings, saveGiftIdea } = useData();
+  const { people, giftIdeas, saveGiftIdea } = useData();
   const { hasShareIntent, shareIntent, resetShareIntent } = useShareIntentContext();
 
   const [pasted, setPasted] = useState('');
@@ -59,11 +59,6 @@ export default function ShareScreen() {
       } catch {
         imageUri = image.path;
       }
-    }
-    if (url && settings.linkPreview && (!title || !imageUri)) {
-      const preview = await fetchLinkPreview(url);
-      if (!title && preview?.title) title = preview.title;
-      if (!imageUri && preview?.imageUrl) imageUri = preview.imageUrl;
     }
     if (!title) title = url ? hostOf(url) : text ? text.slice(0, 60) : (image?.fileName ?? t('gift.title'));
     const idea: GiftIdea = {

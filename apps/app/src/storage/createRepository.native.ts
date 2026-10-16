@@ -1,6 +1,6 @@
 import { openDatabaseAsync, type SQLiteDatabase } from 'expo-sqlite';
 import type { BackupData, Celebration, GiftIdea, GiftRecord, Person } from '@cento/core';
-import { DEFAULT_SETTINGS, mergeSettings, type ImportMode, type Repository, type Settings } from './repository';
+import { DEFAULT_SETTINGS, mergeSettings, withoutGiftContributors, type ImportMode, type Repository, type Settings } from './repository';
 
 /**
  * SQLite repository (iOS / Android). Rich objects are stored as JSON documents in one column per
@@ -81,18 +81,20 @@ class SqliteRepository implements Repository {
   }
 
   async listGiftIdeas(personId?: string): Promise<GiftIdea[]> {
-    return personId
+    const ideas = personId
       ? this.rows<GiftIdea>('SELECT json FROM gift_ideas WHERE person_id = ? ORDER BY created_at DESC', [personId])
       : this.rows<GiftIdea>('SELECT json FROM gift_ideas ORDER BY created_at DESC');
+    return (await ideas).map(withoutGiftContributors);
   }
 
   async saveGiftIdea(g: GiftIdea): Promise<void> {
     const db = await this.conn();
+    const idea = withoutGiftContributors(g);
     await db.runAsync('INSERT OR REPLACE INTO gift_ideas (id, person_id, created_at, json) VALUES (?, ?, ?, ?)', [
-      g.id,
-      g.personId,
-      g.createdAt,
-      JSON.stringify(g),
+      idea.id,
+      idea.personId,
+      idea.createdAt,
+      JSON.stringify(idea),
     ]);
   }
 
@@ -139,11 +141,12 @@ class SqliteRepository implements Repository {
         ]);
       }
       for (const g of data.giftIdeas) {
+        const idea = withoutGiftContributors(g);
         await db.runAsync('INSERT OR REPLACE INTO gift_ideas (id, person_id, created_at, json) VALUES (?, ?, ?, ?)', [
-          g.id,
-          g.personId,
-          g.createdAt,
-          JSON.stringify(g),
+          idea.id,
+          idea.personId,
+          idea.createdAt,
+          JSON.stringify(idea),
         ]);
       }
       for (const r of data.giftRecords) {

@@ -355,7 +355,7 @@ These are the parts that cannot run in a browser or Expo Go, so this is their fi
 | Share sheet | In Chrome, share a page and pick **Cento**. The Save gift idea screen opens with the link. |
 | Widget | Long-press the home screen, Widgets, **Cento**. Resize it to see the small, medium and large layouts. |
 | Contacts import | Settings → Privacy → Import from contacts. Android asks for the contacts permission only now. |
-| Offline | Turn on airplane mode and use the app. Everything except link previews works. |
+| Offline | Turn on airplane mode and use the app. All in-app features work offline. |
 | Export / import | Settings → Privacy → Full backup (JSON), save it, then import it back. |
 
 ## 9. After changing the code

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Modal, Pressable, ScrollView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { namesOn, suggestNameDay, type MonthDay } from '@cento/core';
 import { Button, Card, Chip, Field, Row, SectionLabel } from './ui';
 import { space, useTheme } from '@/theme';
@@ -66,7 +66,15 @@ export function NameDayPicker({ firstName, value, onChange }: Props) {
       </Card>
 
       <Modal visible={open} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setOpen(false)}>
-        <ScrollView style={{ flex: 1, backgroundColor: theme.bg }} contentContainerStyle={{ padding: space.xl, gap: space.lg }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined}
+        >
+          <ScrollView
+            style={{ flex: 1, backgroundColor: theme.bg }}
+            contentContainerStyle={{ padding: space.xl, gap: space.lg }}
+            keyboardShouldPersistTaps="handled"
+          >
           <Text style={{ fontSize: 22, fontWeight: '800', color: theme.text }}>{t('form.namedayPickTitle')}</Text>
           {suggestion ? (
             <View style={{ gap: space.sm }}>
@@ -107,7 +115,8 @@ export function NameDayPicker({ firstName, value, onChange }: Props) {
             />
           </View>
           <Button label={t('common.cancel')} variant="ghost" onPress={() => setOpen(false)} />
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );

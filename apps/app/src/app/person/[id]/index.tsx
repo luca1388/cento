@@ -190,21 +190,6 @@ export default function PersonDetailScreen() {
                     </Pressable>
                   ) : null}
                   {g.note ? <Text style={{ fontSize: 13, color: theme.muted }}>{g.note}</Text> : null}
-                  {g.participantIds?.length ? (
-                    <Text style={{ fontSize: 12, color: theme.muted }}>
-                      {t('gift.participants')}: {g.participantIds.map((participantId) => people.find((p) => p.id === participantId)?.name).filter(Boolean).join(', ')}
-                    </Text>
-                  ) : null}
-                  {g.paidParticipantIds?.length ? (
-                    <Text style={{ fontSize: 12, color: theme.muted }}>
-                      {t('gift.paid')}: {g.paidParticipantIds.map((participantId) => people.find((p) => p.id === participantId)?.name).filter(Boolean).join(', ')}
-                    </Text>
-                  ) : null}
-                  {g.externalContributors?.length ? (
-                    <Text style={{ fontSize: 12, color: theme.muted }}>
-                      {t(g.participantIds?.length ? 'gift.externalParticipants' : 'gift.participants')}: {g.externalContributors.map((contributor) => `${contributor.name} (${contributor.paid ? t('gift.paidStatus') : t('gift.unpaidStatus')})`).join(', ')}
-                    </Text>
-                  ) : null}
                 </View>
               </Row>
               <Row style={{ flexWrap: 'wrap' }}>

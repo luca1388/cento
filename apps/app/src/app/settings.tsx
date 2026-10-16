@@ -161,11 +161,6 @@ export default function SettingsScreen() {
             right={<Text style={{ color: theme.muted }}>›</Text>}
           />
           <SettingRow
-            title={t('settings.privacy.linkPreview')}
-            hint={t('settings.privacy.linkPreviewHint')}
-            right={<Switch value={settings.linkPreview} onChange={(v) => void updateSettings({ linkPreview: v })} />}
-          />
-          <SettingRow
             title={t('settings.privacy.policy')}
             onPress={() => router.push('/privacy')}
             right={<Text style={{ color: theme.muted }}>›</Text>}

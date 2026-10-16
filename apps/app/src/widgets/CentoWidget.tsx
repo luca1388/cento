@@ -37,7 +37,7 @@ export function CentoWidget({ snapshot, width, height, today = isoToday() }: Pro
   return (
     <FlexWidget
       clickAction="OPEN_URI"
-      clickActionData={{ uri: first?.deepLink ?? 'cento://' }}
+      clickActionData={{ uri: 'cento://' }}
       style={{
         width: 'match_parent',
         height: 'match_parent',
@@ -62,7 +62,7 @@ export function CentoWidget({ snapshot, width, height, today = isoToday() }: Pro
         <FlexWidget
           key={item.id}
           clickAction="OPEN_URI"
-          clickActionData={{ uri: item.deepLink }}
+          clickActionData={{ uri: 'cento://' }}
           style={{ flexDirection: 'row', marginTop: 8, alignItems: 'center' }}
         >
           <FlexWidget style={{ flex: 1 }}>

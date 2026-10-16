@@ -41,10 +41,9 @@ demo/
         ├── background/     dailyTask.{native}.ts (expo-background-task)
         ├── backup/         files.{native,web}.ts: share/download a file, pick a file, keep a shared image
         ├── contacts/       importContacts.{native,web}.ts
-        ├── network/        linkPreview.ts — the only fetch() in the app
         ├── sync/build.ts   builds snapshot + notification plan from data (used by the hook and the background task)
         ├── theme/          "Mezzanotte" palette, light and dark
-        └── utils/          date formatting (date-fns, never hand-formatted), sample data, safe goBack
+        └── utils/          URL handling, date formatting (date-fns), sample data, safe goBack
 ```
 
 Platform-specific files use Metro's resolution: `x.native.ts`, `x.ios.ts`, `x.android.tsx`, `x.web.ts`, and a plain `x.ts` that re-exports one of them so TypeScript (which does not know platform extensions) has a module to resolve. All variants are typechecked.
@@ -57,11 +56,11 @@ Platform-specific files use Metro's resolution: `x.native.ts`, `x.ios.ts`, `x.an
 | `/person/new`, `/person/[id]/edit` | Add / edit person: name, day/month/optional year, name-day pre-filled from the saints calendar with "change date", relationship tags, birthday reminder offsets, notes |
 | `/person/[id]` | Person detail: countdown tiles, birthday card, party card with checklist, gift ideas (idea → bought → given), gift history by year with amounts, notes, delete |
 | `/person/[id]/celebration` | Party editor: date (defaults to the Saturday on or after the birthday), time, place, checklist, copy last year's checklist, own reminder offsets |
-| `/person/[id]/gift` | Gift idea by hand: title, link, note; link preview only when the Privacy switch is on |
+| `/person/[id]/gift` | Gift idea by hand: title, link, note; URL host is used when no title is entered |
 | `/person/[id]/record` | "What did you give?": pick a saved idea or type, amount, occasion, year; "Nothing this time" dismisses the prompt |
 | `/share` | Save gift idea from the share sheet (link, text, photo) or from a pasted link on web / Expo Go; person picker with recent people first |
 | `/import-contacts` | Reads name and birthday from device contacts, once; tick who to import |
-| `/settings` | Privacy card first (export JSON / ICS, import merge or replace, contacts import, link-preview switch, policy), language, notifications (on/off, time of day, scheduled count), name days and calendar, Feb 29 policy, widget refresh, yearly spend, sample data, delete all |
+| `/settings` | Privacy card first (export JSON / ICS, import merge or replace, contacts import, policy), language, notifications (on/off, time of day, scheduled count), name days and calendar, Feb 29 policy, widget refresh, yearly spend, sample data, delete all |
 | `/privacy` | The privacy policy, bundled, readable offline |
 
 ## Run
@@ -117,7 +116,7 @@ cd apps/app && npx expo export --platform web
 
 ## Conventions
 
-- **No network.** `grep -rn "fetch(" apps/app/src` must return only `network/linkPreview.ts`. Dependencies are checked for network access before being added. The service worker caches only same-origin GET requests.
+- **No network.** `grep -rn "fetch(" apps/app/src` must return no matches. Dependencies are checked for network access before being added. The service worker caches only same-origin GET requests.
 - **No string literals in screens.** Everything goes through `useT()`; plurals use `_one` / `_other` keys; sentences use interpolation, never concatenation.
 - **Dates are calendar dates.** `YYYY-MM-DD`, or `--MM-DD` when the year is unknown. Arithmetic in `packages/core/src/dates.ts` uses UTC so DST never produces a 23-hour day.
 - **Everything derived is rebuilt, never patched.** On any change to people, parties, settings or language, `useDerivedSync` recomputes the whole notification plan and the whole widget snapshot and hands them to the OS. The daily background task does the same without the app open.
@@ -139,6 +138,5 @@ cd apps/app && npx expo export --platform web
 
 - Native paths (notification delivery, share extension, widgets, contacts, background task) are implemented but have not been run on a device from this repository.
 - Widget preview images and the Android widget `previewImage` are not provided.
-- Link previews on web are subject to the target site's CORS policy and usually fail silently; the idea is saved anyway with the host as title.
 - Export on web downloads a file; there is no "share" sheet. Import works through the browser file picker.
 - Contacts import skips contacts without a birthday and ignores non-Gregorian birthdays.

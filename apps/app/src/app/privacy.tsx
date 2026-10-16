@@ -6,7 +6,7 @@ import { useLocale } from '@/i18n/LocaleProvider';
 import { formatLongDate } from '@/utils/format';
 import { space } from '@/theme';
 
-const UPDATED = '2026-10-13';
+const UPDATED = '2026-10-16';
 
 /** The whole privacy policy, bundled with the app, readable offline. */
 export default function PrivacyScreen() {
@@ -20,7 +20,6 @@ export default function PrivacyScreen() {
           <Body>{t('privacy.p2')}</Body>
           <Body>{t('privacy.p3')}</Body>
           <Body>{t('privacy.p4')}</Body>
-          <Body>{t('privacy.p5')}</Body>
           <Body muted>{t('privacy.updated', { date: formatLongDate(UPDATED, dateFnsLocale) })}</Body>
         </Card>
       </ScrollView>
