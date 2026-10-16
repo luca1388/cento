@@ -100,7 +100,6 @@ export default function PersonDetailScreen() {
           <SectionLabel>{t('person.birthday')}</SectionLabel>
           {birth ? (
             <Body>
-              🎂{' '}
               {birth.year !== null
                 ? formatLongDate(person.birthDate, dateFnsLocale)
                 : `${formatDayMonth({ month: birth.month, day: birth.day }, dateFnsLocale)} · ${t('upcoming.dateUnknownYear')}`}
@@ -115,7 +114,7 @@ export default function PersonDetailScreen() {
             </Body>
           ) : null}
           {person.nameDay ? (
-            <Body muted>🕯️ {t('person.namedayOn', { date: formatDayMonth(person.nameDay, dateFnsLocale) })}</Body>
+            <Body muted>{t('person.namedayOn', { date: formatDayMonth(person.nameDay, dateFnsLocale) })}</Body>
           ) : (
             <Body muted>{t('person.noNameday')}</Body>
           )}
@@ -135,7 +134,7 @@ export default function PersonDetailScreen() {
           {celebration ? (
             <View style={{ gap: 4 }}>
               <Body>
-                🎉 {formatShortDate(celebration.date, dateFnsLocale)}
+                {formatShortDate(celebration.date, dateFnsLocale)}
                 {celebration.time ? ` · ${celebration.time}` : ''}
                 {celebration.place ? ` · ${celebration.place}` : ''}
               </Body>
@@ -148,12 +147,27 @@ export default function PersonDetailScreen() {
                 </Body>
               ) : null}
               {celebration.checklist.slice(0, 5).map((i, idx) => (
-                <Text
-                  key={idx}
-                  style={{ fontSize: 14, color: i.done ? theme.muted : theme.text, textDecorationLine: i.done ? 'line-through' : 'none' }}
-                >
-                  {i.done ? '☑' : '☐'} {i.text}
-                </Text>
+                <View key={idx} style={{ flexDirection: 'row', alignItems: 'center', gap: space.sm }}>
+                  <View
+                    style={{
+                      width: 18,
+                      height: 18,
+                      borderWidth: 1,
+                      borderColor: i.done ? theme.accent : theme.line,
+                      borderRadius: 4,
+                      backgroundColor: i.done ? theme.accent : 'transparent',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {i.done ? <Text style={{ color: theme.onPrimary, fontSize: 12, lineHeight: 14 }}>✓</Text> : null}
+                  </View>
+                  <Text
+                    style={{ flex: 1, fontSize: 14, color: i.done ? theme.muted : theme.text, textDecorationLine: i.done ? 'line-through' : 'none' }}
+                  >
+                    {i.text}
+                  </Text>
+                </View>
               ))}
             </View>
           ) : (

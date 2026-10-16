@@ -77,8 +77,8 @@ export default function SettingsScreen() {
     const ics = buildICS(
       { people, celebrations },
       {
-        birthday: (n) => `🎂 ${n}`,
-        nameday: (n) => `🕯️ ${n} · ${t('event.nameday')}`,
+        birthday: (n) => `${t('event.birthday')}: ${n}`,
+        nameday: (n) => `${t('event.nameday')}: ${n}`,
         celebration: (n) => t('event.party', { name: n }),
       },
     );

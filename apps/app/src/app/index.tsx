@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Pressable, SectionList, Text, View } from 'react-native';
 import { Link, router } from 'expo-router';
+import { Gift, Plus, Settings } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { buildUpcomingEvents, groupEvents, pendingGiftPrompts, todayISO, type UpcomingGroup } from '@cento/core';
 import { EventRow } from '@/components/EventRow';
@@ -57,7 +58,7 @@ export default function UpcomingScreen() {
         contentContainerStyle={{
           paddingTop: insets.top + space.lg,
           paddingHorizontal: space.lg,
-          paddingBottom: 120,
+          paddingBottom: 160,
           gap: space.sm,
         }}
         ListHeaderComponent={
@@ -73,14 +74,14 @@ export default function UpcomingScreen() {
                 <Subtitle>{t('upcoming.subtitle', { count: total })}</Subtitle>
               </View>
               <Row>
-                <Link href="/share" asChild>
-                  <Pressable hitSlop={12} accessibilityLabel={t('share.title')} style={{ padding: 6 }}>
-                    <Text style={{ fontSize: 22 }}>🎁</Text>
-                  </Pressable>
-                </Link>
                 <Link href="/settings" asChild>
-                  <Pressable hitSlop={12} accessibilityLabel={t('settings.title')} style={{ padding: 6 }}>
-                    <Text style={{ fontSize: 22 }}>⚙️</Text>
+                  <Pressable
+                    hitSlop={12}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('settings.title')}
+                    style={{ padding: 6 }}
+                  >
+                    <Settings size={20} color={theme.accent} strokeWidth={1.8} />
                   </Pressable>
                 </Link>
               </Row>
@@ -108,7 +109,6 @@ export default function UpcomingScreen() {
               paddingHorizontal: space.xl,
             }}
           >
-            <Text style={{ fontSize: 44 }}>🎂</Text>
             <Text style={{ fontSize: 18, fontWeight: '800', color: theme.text }}>{t('upcoming.empty.title')}</Text>
             <Body muted style={{ textAlign: 'center' }}>
               {t('upcoming.empty.body')}
@@ -119,6 +119,33 @@ export default function UpcomingScreen() {
           </View>
         }
       />
+      <Pressable
+        accessibilityLabel={t('share.title')}
+        accessibilityHint={t('share.subtitle')}
+        accessibilityRole="button"
+        onPress={() => router.push('/share')}
+        style={({ pressed }) => ({
+          position: 'absolute',
+          right: space.xl + 4,
+          bottom: insets.bottom + space.xl + 68,
+          width: 48,
+          height: 48,
+          borderRadius: radius.md,
+          backgroundColor: theme.card,
+          borderWidth: 1,
+          borderColor: theme.line,
+          alignItems: 'center',
+          justifyContent: 'center',
+          opacity: pressed ? 0.8 : 1,
+          shadowColor: theme.primary,
+          shadowOpacity: 0.16,
+          shadowRadius: 8,
+          shadowOffset: { width: 0, height: 3 },
+          elevation: 3,
+        })}
+      >
+        <Gift size={20} color={theme.accent} strokeWidth={1.8} />
+      </Pressable>
       <Pressable
         accessibilityLabel={t('upcoming.add')}
         accessibilityRole="button"
@@ -141,16 +168,7 @@ export default function UpcomingScreen() {
           elevation: 6,
         })}
       >
-        <Text
-          style={{
-            color: theme.onPrimary,
-            fontSize: 30,
-            lineHeight: 34,
-            fontWeight: '300',
-          }}
-        >
-          +
-        </Text>
+        <Plus size={26} color={theme.onPrimary} strokeWidth={1.8} />
       </Pressable>
     </Screen>
   );

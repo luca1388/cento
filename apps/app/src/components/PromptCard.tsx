@@ -19,7 +19,7 @@ export function PromptCard({ prompt }: { prompt: GiftPrompt }) {
 
   return (
     <View style={{ backgroundColor: theme.accentSoft, borderRadius: radius.md, padding: space.lg, gap: space.sm, marginBottom: space.md }}>
-      <Text style={{ fontSize: 16, fontWeight: '800', color: theme.text }}>🎁 {t('prompt.title', { name: firstName })}</Text>
+      <Text style={{ fontSize: 16, fontWeight: '800', color: theme.text }}>{t('prompt.title', { name: firstName })}</Text>
       <Text style={{ fontSize: 13, color: theme.muted }}>
         {t('prompt.body', { occasion: t(`record.occasion.${prompt.occasion}`), date: formatShortDate(prompt.date, dateFnsLocale) })}
       </Text>

@@ -159,7 +159,7 @@ export default function ImportContactsScreen() {
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 15, fontWeight: '700', color: theme.text }}>{c.name}</Text>
                 <Text style={{ fontSize: 12, color: theme.muted }}>
-                  🎂 {formatDayMonth(md, dateFnsLocale)}
+                  {formatDayMonth(md, dateFnsLocale)}
                   {c.birthDate.startsWith('--') ? '' : ` ${c.birthDate.slice(0, 4)}`}
                   {already ? ` · ${t('contacts.alreadyImported')}` : ''}
                   {!already && possibleDuplicate ? ` · ${t('contacts.possibleDuplicate', { name: possibleDuplicate })}` : ''}

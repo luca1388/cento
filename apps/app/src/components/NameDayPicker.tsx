@@ -41,7 +41,7 @@ export function NameDayPicker({ firstName, value, onChange }: Props) {
         {value ? (
           <>
             <Text style={{ fontSize: 16, color: theme.text, fontWeight: '600' }}>
-              🕯️ {formatDayMonth(value, dateFnsLocale)}
+              {formatDayMonth(value, dateFnsLocale)}
               {namesOn(value).length ? (
                 <Text style={{ color: theme.muted, fontWeight: '400' }}> · {namesOn(value).slice(0, 4).join(', ')}</Text>
               ) : null}

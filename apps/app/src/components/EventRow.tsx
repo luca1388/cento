@@ -77,7 +77,7 @@ export function EventRow({ event }: { event: UpcomingEvent }) {
             {event.milestone ? ` · ${t('event.milestone')}` : ''}
           </Text>
         </View>
-        {subline ? <Text style={{ fontSize: 12, color: theme.flame, fontWeight: '600' }}>🎉 {subline}</Text> : null}
+        {subline ? <Text style={{ fontSize: 12, color: theme.flame, fontWeight: '600' }}>{subline}</Text> : null}
       </View>
     </Pressable>
   );
