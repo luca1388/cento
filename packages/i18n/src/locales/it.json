@@ -15,7 +15,7 @@
   "event.party": "Festa di {{name}}",
   "event.partySubline": "festa {{date}}",
   "event.milestone": "Compleanno tondo",
-  "upcoming.title": "Prossimi",
+  "upcoming.title": "Prossimi eventi",
   "upcoming.subtitle_one": "{{count}} data in arrivo",
   "upcoming.subtitle_other": "{{count}} date in arrivo",
   "upcoming.group.today": "Oggi",

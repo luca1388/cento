@@ -15,7 +15,7 @@
   "event.party": "{{name}}'s party",
   "event.partySubline": "party {{date}}",
   "event.milestone": "Milestone birthday",
-  "upcoming.title": "Upcoming",
+  "upcoming.title": "Upcoming events",
   "upcoming.subtitle_one": "{{count}} date coming up",
   "upcoming.subtitle_other": "{{count}} dates coming up",
   "upcoming.group.today": "Today",
