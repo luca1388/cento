@@ -188,8 +188,8 @@ iOS (WidgetKit, SwiftUI, all fed by the same snapshot):
 - **StandBy** reuses the home screen widgets automatically.
 - Widget configuration (one intent parameter): show *all events* or *birthdays only*.
 
-Android (Glance):
-- Resizable widget with 2x2, 4x2 and 4x4 layouts, same content tiers as iOS small, medium, large.
+Android (react-native-android-widget):
+- Horizontal widget with 2x2 and 4x2 layouts: next birthday only, or the next birthday plus the following three.
 - Android has no lock screen widgets; the notification on the day serves that role.
 
 Snapshot changes: each day entry now carries, per event, `kind`, `name`, a `short` line for lock screen sizes and a `long` line for home screen sizes, both already localized, plus a `deepLink`. Nothing else in the widget code needs to know what a name day or a celebration is.

@@ -21,22 +21,26 @@ function isoToday(): string {
   return `${n.getFullYear()}-${p(n.getMonth() + 1)}-${p(n.getDate())}`;
 }
 
-function ringSvg(daysLeft: number, progress: number, size: number, unit: string, badge: string, badgeColor: string, secondPerson?: WidgetPerson): string {
+function ringSvg(daysLeft: number, progress: number, size: number, unit: string, badge: string, badgeColor: string, showBadge: boolean, secondPerson?: WidgetPerson): string {
   const center = size / 2;
   const radius = center - 4;
   const circumference = 2 * Math.PI * radius;
   const dash = Math.round(circumference * progress * 100) / 100;
   const label = daysLeft === 0 ? 'Oggi' : String(daysLeft);
   const unitText = daysLeft === 0 ? '' : unit;
-  const badgeRadius = size >= 80 ? 15 : 13;
+  const badgeRadius = size >= 80 ? 15 : 11;
   const badgeX = center + radius * 0.72;
   const badgeY = center + radius * 0.72;
   const fontSize = daysLeft === 0 ? 12 : size >= 80 ? 34 : 26;
-  const badgeFontSize = badge.length > 1 ? 12 : 16;
+  const badgeFontSize = badge.length > 1 ? 12 : size <= 80 ? 14 : 16;
+  const ringUnit = size <= 70 ? '' : unitText;
+  const unitX = size <= 80 ? center - 5 : center;
+  const unitY = size <= 80 ? center + 20 : center + 27;
+  const unitFontSize = size <= 80 ? 9 : 11;
   const centerContent = size <= 70 && secondPerson
     ? `<circle cx="${center - 12}" cy="${center}" r="14" fill="${badgeColor}" stroke="${colors.bg}" stroke-width="2"/><text x="${center - 12}" y="${center + 5}" fill="${colors.onAvatar}" font-size="14" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${badge}</text><circle cx="${center + 12}" cy="${center}" r="14" fill="${secondPerson.avatarColor}" stroke="${colors.bg}" stroke-width="2"/><text x="${center + 12}" y="${center + 5}" fill="${colors.onAvatar}" font-size="14" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${secondPerson.initial}</text>`
-    : `<text x="${center}" y="${center + 10}" fill="${colors.accent}" font-size="${fontSize}" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${label}</text>${unitText ? `<text x="${center}" y="${center + 27}" fill="${colors.textMuted}" font-size="11" font-family="Roboto, sans-serif" text-anchor="middle">${unitText}</text>` : ''}`;
-  const badgeContent = size <= 70 ? '' : `<circle cx="${badgeX}" cy="${badgeY}" r="${badgeRadius}" fill="${badgeColor}" stroke="${colors.bg}" stroke-width="3"/><text x="${badgeX}" y="${badgeY + badgeFontSize * 0.34}" fill="${colors.onAvatar}" font-size="${badgeFontSize}" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${badge}</text>`;
+    : `<text x="${center}" y="${center + 10}" fill="${colors.accent}" font-size="${fontSize}" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${label}</text>${ringUnit ? `<text x="${unitX}" y="${unitY}" fill="${colors.textMuted}" font-size="${unitFontSize}" font-family="Roboto, sans-serif" text-anchor="middle">${ringUnit}</text>` : ''}`;
+  const badgeContent = size <= 70 || !showBadge ? '' : `<circle cx="${badgeX}" cy="${badgeY}" r="${badgeRadius}" fill="${badgeColor}" stroke="${colors.bg}" stroke-width="3"/><text x="${badgeX}" y="${badgeY + badgeFontSize * 0.34}" fill="${colors.onAvatar}" font-size="${badgeFontSize}" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${badge}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="${colors.ringTrack}" stroke-width="5"/><circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="${colors.accent}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${dash} ${circumference}" transform="rotate(-90 ${center} ${center})"/>${centerContent}${badgeContent}</svg>`;
 }
 
@@ -44,7 +48,7 @@ function Ring({ model, size, person }: { model: NonNullable<BirthdayWidgetModel[
   const badge = size <= 70 && model.totalCount > 1 ? model.people[0]?.initial ?? '' : model.totalCount > 1 ? String(model.totalCount) : person?.initial ?? '?';
   const badgeColor = model.totalCount > 1 ? colors.avatarCoral : person?.avatarColor ?? colors.avatarCoral;
   const secondPerson = size <= 70 && model.totalCount > 1 ? model.people[1] : undefined;
-  return <SvgWidget svg={ringSvg(model.daysLeft, model.ringProgress, size, model.ringUnit, badge, badgeColor, secondPerson)} style={{ width: size, height: size }} />;
+  return <SvgWidget svg={ringSvg(model.daysLeft, model.ringProgress, size, model.ringUnit, badge, badgeColor, model.totalCount > 1, secondPerson)} style={{ width: size, height: size }} />;
 }
 
 function Avatar({ person, size }: { person: WidgetPerson; size: number }) {
@@ -55,17 +59,16 @@ function Avatar({ person, size }: { person: WidgetPerson; size: number }) {
   );
 }
 
-function UpcomingRow({ item, large, rowHeight }: { item: NonNullable<BirthdayWidgetModel['upcoming']>[number]; large: boolean; rowHeight?: number }) {
+function UpcomingRow({ item, rowHeight }: { item: NonNullable<BirthdayWidgetModel['upcoming']>[number]; rowHeight: number }) {
   return (
-    <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', alignItems: 'center', height: rowHeight ?? (large ? 58 : 54), paddingVertical: 4 }}>
-      <Avatar person={item.person} size={large ? 34 : 28} />
+    <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', alignItems: 'center', height: rowHeight }}>
+      <Avatar person={item.person} size={28} />
       <FlexWidget style={{ flex: 1, flexDirection: 'column', marginLeft: 9 }}>
-        <TextWidget text={item.person.name} style={{ fontSize: large ? 14 : 13, color: colors.text, fontWeight: '700' }} maxLines={1} truncate="END" />
+        <TextWidget text={item.person.name} style={{ fontSize: 13, color: colors.text, fontWeight: '700' }} maxLines={1} truncate="END" />
         <TextWidget text={item.dateLabel} style={{ fontSize: 11, color: colors.textMuted }} maxLines={1} />
       </FlexWidget>
-      <FlexWidget style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 12, width: large ? 112 : 78, justifyContent: 'flex-end' }}>
+      <FlexWidget style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 6, width: 30, justifyContent: 'flex-end' }}>
         <TextWidget text={String(item.daysLeft)} style={{ fontSize: 18, color: colors.accent, fontWeight: '700' }} maxLines={1} />
-        <TextWidget text={` ${item.daysUnit}`} style={{ fontSize: 11, color: colors.textMuted }} maxLines={1} />
       </FlexWidget>
     </FlexWidget>
   );
@@ -93,7 +96,7 @@ function CompactWidget({ model, width, height }: { model: BirthdayWidgetModel; w
     ? first?.turningAge !== undefined ? `${hero.relativeLabel} · ${first.ageLabel}` : hero.relativeLabel
     : `${hero.relativeLabel} · ${hero.countLabel}`;
   return (
-    <FlexWidget style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGap: 8, padding: 4 }}>
+    <FlexWidget style={{ width: 'match_parent', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGap: 8, padding: 4 }}>
       <TextWidget text={hero.totalCount > 1 ? model.sectionNextPlural : model.sectionNext} style={{ fontSize: 10, color: colors.textMuted, fontWeight: '700', textAlign: 'center' }} maxLines={1} />
       <Ring model={hero} size={Math.max(72, Math.min(88, Math.min(width, height) - 64))} person={first} />
       <FlexWidget style={{ flexDirection: 'column', alignItems: 'center' }}>
@@ -104,71 +107,38 @@ function CompactWidget({ model, width, height }: { model: BirthdayWidgetModel; w
   );
 }
 
-function LargeWidget({ model, height }: { model: BirthdayWidgetModel; height: number }) {
-  const hero = model.hero!;
-  const first = hero.people[0]!;
-  const maxRows = hero.totalCount > 1 ? 3 : 4;
-  const footerHeight = height >= 360 ? 20 : 0;
-  const cardHeight = hero.totalCount > 1 ? 164 : 126;
-  const headerHeight = 34;
-  const rowDividerHeight = 1;
-  const availableForRows = height - 36 - cardHeight - headerHeight - footerHeight;
-  const rowsThatFit = Math.floor((availableForRows + rowDividerHeight) / (58 + rowDividerHeight));
-  const rowCount = Math.min(maxRows, model.upcoming.length, rowsThatFit);
-  const rowHeight = rowCount > 0
-    ? Math.max(58, Math.min(86, Math.floor((availableForRows - (rowCount - 1) * rowDividerHeight) / rowCount)))
-    : 58;
+function WideWidget({ model, width, height }: { model: BirthdayWidgetModel; width: number; height: number }) {
+  const leftWidth = Math.max(78, Math.round((width - 28) * 0.42));
+  const upcoming = model.upcoming.slice(0, 3);
+  const rowHeight = Math.max(30, Math.floor((height - 14) / Math.max(upcoming.length, 1)));
   return (
-    <FlexWidget style={{ width: 'match_parent', flex: 1, flexDirection: 'column', padding: 2 }}>
-      <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', alignItems: 'center', backgroundColor: colors.bgCard, borderRadius: 20, padding: 14, height: hero.totalCount > 1 ? 164 : 126 }}>
-        <Ring model={hero} size={88} person={first} />
-        <FlexWidget style={{ flex: 1, flexDirection: 'column', marginLeft: 12 }}>
-          <TextWidget text={hero.totalCount > 1 ? `${hero.relativeLabel.toLocaleUpperCase()} · ${hero.countLabel.toLocaleUpperCase()}` : hero.relativeLabel.toLocaleUpperCase()} style={{ fontSize: 12, color: colors.accent, fontWeight: '700' }} maxLines={1} truncate="END" />
-          {hero.totalCount > 1 ? (
-            <FlexWidget style={{ flexDirection: 'column', marginTop: 5 }}>
-              {hero.people.map((person) => (
-                <FlexWidget key={person.id} style={{ flexDirection: 'row', alignItems: 'center', height: 36 }}>
-                  <Avatar person={person} size={30} />
-                  <FlexWidget style={{ flexDirection: 'column', marginLeft: 8 }}>
-                    <TextWidget text={person.name} style={{ fontSize: 15, color: colors.text, fontWeight: '700' }} maxLines={1} truncate="END" />
-                    {person.ageLabel ? <TextWidget text={person.ageLabel} style={{ fontSize: 11, color: colors.textMuted }} maxLines={1} /> : null}
-                  </FlexWidget>
-                </FlexWidget>
-              ))}
-              {hero.hiddenCount > 0 ? <TextWidget text={hero.othersLabel} style={{ fontSize: 12, color: colors.textMuted, marginTop: 3 }} maxLines={1} /> : null}
-            </FlexWidget>
-          ) : (
-            <FlexWidget style={{ flexDirection: 'column', marginTop: 3 }}>
-              <TextWidget text={first.name} style={{ fontSize: 22, color: colors.text, fontWeight: '700' }} maxLines={2} truncate="END" />
-              <TextWidget text={`${hero.dateLabel}${first.ageLabel ? ` · ${first.ageLabel}` : ''}`} style={{ fontSize: 12, color: colors.textMuted }} maxLines={1} truncate="END" />
-            </FlexWidget>
-          )}
-        </FlexWidget>
+    <FlexWidget style={{ width: 'match_parent', flex: 1, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 4, paddingVertical: 2 }}>
+      <FlexWidget style={{ width: leftWidth, height: 'match_parent' }}>
+        <CompactWidget model={model} width={leftWidth} height={height} />
       </FlexWidget>
-      <FlexWidget style={{ height: 12 }} />
-      {model.upcoming.slice(0, rowCount).map((item, index) => (
-        <FlexWidget key={item.person.id} style={{ width: 'match_parent', flexDirection: 'column' }}>
-          <UpcomingRow item={item} large rowHeight={rowHeight} />
-          {index < Math.min(model.upcoming.length, rowCount) - 1 ? <FlexWidget style={{ height: 1, backgroundColor: colors.ringTrack }} /> : null}
-        </FlexWidget>
-      ))}
-      {footerHeight > 0 ? <TextWidget text={model.monthFooter} style={{ fontSize: 12, color: colors.textMuted, marginTop: 4, height: 16 }} maxLines={1} /> : null}
+      <FlexWidget style={{ width: 1, height: 'match_parent', marginHorizontal: 6, backgroundColor: colors.ringTrack }} />
+      <FlexWidget style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+        {upcoming.map((item, index) => (
+          <FlexWidget key={item.person.id} style={{ width: 'match_parent', flexDirection: 'column' }}>
+            {index > 0 ? <FlexWidget style={{ height: 1, backgroundColor: colors.ringTrack }} /> : null}
+            <UpcomingRow item={item} rowHeight={rowHeight} />
+          </FlexWidget>
+        ))}
+      </FlexWidget>
     </FlexWidget>
   );
 }
 
 /**
- * Android widget, rendered to RemoteViews by react-native-android-widget. Three tiers by size, same as
- * iOS small / medium / large. It knows nothing about birthdays: every string comes from the snapshot.
+ * Android widget, rendered to RemoteViews by react-native-android-widget. It knows nothing about
+ * birthdays: every string comes from the snapshot.
  */
 export function CentoWidget({ snapshot, width, height, today = isoToday() }: Props) {
   'use no memo';
 
   const day = dayEntry(snapshot, today);
   const model = day?.birthdayWidget;
-  const heroCardHeight = (model?.hero?.totalCount ?? 1) > 1 ? 164 : 126;
-  const showUpcomingList = width >= 300 && height >= 320 && (height - 36 - (height >= 360 ? 20 : 0) - 34 - heroCardHeight) >= 59;
-  const compact = !showUpcomingList;
+  const wide = width >= 220;
 
   return (
     <FlexWidget
@@ -179,11 +149,11 @@ export function CentoWidget({ snapshot, width, height, today = isoToday() }: Pro
         height: 'match_parent',
         backgroundColor: colors.bg,
         borderRadius: 28,
-        padding: compact ? 14 : 16,
+        padding: wide ? 6 : 14,
         flexDirection: 'column',
       }}
     >
-      {!model || model.state === 'empty' ? <EmptyWidget model={model ?? fallbackEmptyModel} /> : showUpcomingList ? <LargeWidget model={model} height={height} /> : <CompactWidget model={model} width={width} height={height} />}
+      {!model || model.state === 'empty' ? <EmptyWidget model={model ?? fallbackEmptyModel} /> : wide ? <WideWidget model={model} width={width} height={height} /> : <CompactWidget model={model} width={width} height={height} />}
     </FlexWidget>
   );
 }

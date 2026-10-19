@@ -50,33 +50,28 @@ Notes on the images:
 
 ## 2. Widget sizes
 
-The widget is **responsive**: it adapts to whatever size the user gives it (resizing is allowed) and does not need to match an exact launcher grid such as 4 × 2. The three mockups are the three **layout presets** the widget switches between; see 2.1 for the rules.
+The home-screen widget supports only two layouts: 2 × 2 and 4 × 2. Android uses horizontal resizing, with a 2 × 2 minimum and a 4 × 2 target. The provider allows up to 280 dp wide to accommodate launcher grid rounding; launchers may expose intermediate widths between those bounds.
 
 | Preset | Mockup size | Typical use | Content |
 |--------|-------------|-------------|---------|
-| Small | 200 × 200 | Narrow widget | Next birthday only |
-| Medium | 400 × 200 | Wide, not tall | Next birthday + as many upcoming rows as fit (up to 3) |
-| Large | 400 × 440 | Wide and tall | Next birthday card + as many upcoming rows as fit (2–4) + monthly count |
+| 2 × 2 | 200 × 200 | Compact | Next birthday only |
+| 4 × 2 | 400 × 200 | Wide | Next birthday on the left + the next three birthdays on the right |
 
 Mockup pixels are proportional design units, not final dp. Implement with flexible layouts and test several widget sizes.
 
 ### 2.1 Responsive behavior
 
-**Minimum size.** The widget cannot be resized below about 2 × 2 cells (declare the minimum and minimum-resize width and height in the widget configuration). Below that there is no layout.
-
-**Choosing the preset.** Use the real widget size in dp, available to the widget task at render time. Suggested breakpoints (to be tuned on real devices):
+**Sizing.** Declare a 2 × 2 minimum and default, a 280 dp maximum width, and horizontal-only resize mode in Android's widget provider. The rendering switches between compact and wide based on the available width.
 
 | Condition | Preset |
 |-----------|--------|
-| width below 250 dp | Small |
-| width 250 dp or more, height below 300 dp | Medium |
-| width 250 dp or more, height 300 dp or more | Large |
+| Narrow layout | 2 × 2 hero only |
+| Wide layout | 2 × 2 hero + three upcoming rows |
 
 **Fluid rules inside a preset.** Text sizes stay fixed (in sp); the widget gives up content, not legibility.
 
-- **Medium**: left column width is about 38% of the widget width, clamped between 130 and 170 dp. The upcoming list shows as many rows as fit (0 to 3). Below 300 dp wide each row drops its date line and keeps name + days.
-- **Large**: the ring scales between 72 and 88 dp. The list shows as many rows as fit (2 to 4; at most 3 when the hero has several people). The footer line is hidden when the height is below 360 dp.
-- **Small**: the ring scales between 72 and 88 dp; the name block can drop its second line (age or count) when the height is tight.
+- **4 × 2**: the hero occupies the left side; three compact upcoming rows on the right retain the avatar, name, date, and accent day count.
+- **2 × 2**: centered hero with a smaller ring; the name and relative-day line may truncate before the countdown is reduced.
 
 **What goes first when space runs out** (last item is dropped first):
 
@@ -84,9 +79,9 @@ Mockup pixels are proportional design units, not final dp. Implement with flexib
 2. The day count
 3. Upcoming rows (the farthest row is dropped first)
 4. Secondary lines: dates and ages in rows, then the hero's age line
-5. The monthly footer
+5. No monthly footer is shown.
 
-**Re-rendering.** When the user resizes the widget the task re-renders with the new size, so the preset and row counts are always computed from the current size.
+**Re-rendering.** When the user resizes the widget the task re-renders using the current dimensions. On iOS, only the small and medium home-screen families are offered; lock-screen accessory families remain available.
 
 All widgets have a corner radius of **28 dp** and **16 dp** inner padding (small: 14–16 dp).
 
@@ -136,11 +131,10 @@ Minimum text size in the widget: 10 sp. Use `sp` for text so system font scaling
 
 | Element | Spec |
 |---------|------|
-| Ring (small, large) | 88 diameter, radius 39, stroke 5, round caps |
-| Ring (medium) | 64 diameter, radius 28, stroke 4, round caps |
+| Ring (2 × 2) | 88 diameter, radius 39, stroke 5, round caps |
+| Ring (4 × 2 hero) | 64 diameter, radius 28, stroke 4, round caps |
 | Ring start | 12 o'clock, clockwise |
-| Avatar (list, medium) | 28 diameter (medium) / 34 (large), centered initial, bold |
-| Avatar (hero, large, several people) | 30 diameter |
+| Avatar (upcoming list) | 20–22 diameter, centered initial, bold |
 | Count badge on ring | 30 diameter, `avatarCoral`, 3 px border in the surface color, bottom-right of the ring |
 | Divider | 1 px, `ringTrack` |
 
@@ -158,29 +152,9 @@ From top to bottom, centered: label, ring, name block.
    - One person: name (16 bold), then "Domani · compie 45 anni" (12 muted; the age part only if the birth year is known).
    - Several people: first names (see 5.3), then "Domani · 4 compleanni".
 
-### 4.2 Medium — two columns with a divider
+### 4.2 Wide (4 × 2) — hero and upcoming list
 
-**Left column** (about 150 wide):
-
-1. Label: "Prossimo compleanno" (one person) or "N compleanni" (several people).
-2. Ring (64):
-   - One person: avatar (48) inside the ring.
-   - Several people: two overlapping avatars (28 each, overlap about 4, 2 px border in `bg`; the initials must stay fully visible).
-3. Names:
-   - One person: name (18 bold), "Domani · 17 ottobre" (accent), "Compie 45 anni" (muted, only if known).
-   - Several people: two names (15 bold, one per line), "e altri N" (13 muted, only if more than 2), "Domani · 17 ottobre" (accent).
-
-**Divider**: 1 px vertical line.
-
-**Right column**: label "Prossimi" followed by **as many rows as fit, up to 3** (see 2.1). Row = avatar (28) + name (13 bold) and date (11 muted, e.g. "25 ottobre") + on the right the day count (18 bold accent) over "giorni" (10 muted).
-
-### 4.3 Large (4 × 4)
-
-1. **Hero card** (`bgCard`, radius 20, padding 14): ring (88) on the left, content on the right.
-   - One person: relative-day label (uppercase, accent, e.g. "DOMANI"), name (22 bold), "17 ottobre · compie 45 anni" (12 muted).
-   - Several people: label "DOMANI · 4 COMPLEANNI", then up to **2 person rows** (avatar 30, name 15 bold, "Compie 38 anni" 11 muted when known), then, if more than 2, a row with a "+N" chip (30, `ringTrackCard`) and "e altri N compleanni" (13 muted).
-2. **List**: header row "Prossimi" (left) and "Tutti" (right, accent), then up to **4 rows** when the hero shows one person and up to **3 rows** when it shows several (the taller hero leaves less space). Fewer rows are shown if the height does not allow them (see 2.1). Rows are separated by 1 px dividers; each row has avatar (34), name (14 bold), date (11 muted) and the day count ("9" 18 bold accent + " giorni" 11 muted) on the right.
-3. **Footer**: text only, e.g. "Ottobre · 4 compleanni ancora" (12 muted). No buttons.
+The left panel repeats the 2 × 2 hero in a narrower column with a 64 dp ring. A vertical divider separates it from the three upcoming rows. Each compact row keeps the avatar, name and date, with the day count aligned at the right; the unit label may be omitted when width is constrained.
 
 ## 5. Data rules
 

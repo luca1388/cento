@@ -11,7 +11,8 @@
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "app": "npm run start --workspace apps/app",
-    "web": "npm run web --workspace apps/app"
+    "web": "npm run web --workspace apps/app",
+    "android": "npm run android --workspace apps/app"
   },
   "engines": {
     "node": ">=20.19"

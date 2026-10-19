@@ -92,23 +92,24 @@ struct CentoWidgetView: View {
             if let model, model.state == "empty" { empty(model) }
             else if let model, let hero {
                 GeometryReader { proxy in
-                        let leftWidth = min(170, max(130, proxy.size.width * 0.38))
-                        HStack(spacing: 12) {
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text(hero.totalCount > 1 ? hero.countLabel : model.sectionNext).font(.system(size: 11, weight: .bold)).foregroundStyle(WidgetColors.muted).lineLimit(1)
+                        let leftWidth = proxy.size.width * 0.42
+                        let upcoming = Array(model.upcoming.prefix(3))
+                        let rowHeight = proxy.size.height / 3
+                        HStack(spacing: 8) {
+                            VStack(spacing: 3) {
+                                Text(hero.totalCount > 1 ? model.sectionNextPlural : model.sectionNext)
+                                    .font(.system(size: 10, weight: .bold)).tracking(0.6).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75)
                                 ring(hero, size: 64, inCard: false)
-                                ForEach(hero.people.prefix(2)) { person in
-                                    Text(person.name).font(.system(size: hero.totalCount > 1 ? 15 : 18, weight: .bold)).foregroundStyle(WidgetColors.text).lineLimit(1)
-                                }
-                                if hero.hiddenCount > 0 { Text(hero.othersLabel).font(.system(size: 12)).foregroundStyle(WidgetColors.muted).lineLimit(1) }
-                                Text("\(hero.relativeLabel) · \(hero.dateLabel)").font(.system(size: 12, weight: .bold)).foregroundStyle(WidgetColors.accent).lineLimit(1).minimumScaleFactor(0.8)
-                                if hero.totalCount == 1, let age = hero.people.first?.ageLabel { Text(age).font(.system(size: 11)).foregroundStyle(WidgetColors.muted).lineLimit(1) }
-                                Spacer(minLength: 0)
-                            }.frame(width: leftWidth, alignment: .leading)
+                                Text(smallNames(hero)).font(.system(size: 14, weight: .bold)).foregroundStyle(WidgetColors.text).lineLimit(1).minimumScaleFactor(0.75)
+                                Text(smallDetail(hero)).font(.system(size: 10)).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75)
+                            }
+                            .frame(width: leftWidth, maxHeight: .infinity)
                             Rectangle().fill(WidgetColors.track).frame(width: 1)
-                            VStack(alignment: .leading, spacing: 2) {
-                                let rows = min(3, max(0, Int((proxy.size.height - 12) / 54)))
-                                ForEach(Array(model.upcoming.prefix(rows))) { item in upcomingRow(item, large: false) }
+                            VStack(spacing: 0) {
+                                ForEach(Array(upcoming.enumerated()), id: \.element.id) { index, item in
+                                    mediumUpcomingRow(item).frame(height: rowHeight)
+                                    if index < upcoming.count - 1 { Rectangle().fill(WidgetColors.track).frame(height: 1) }
+                                }
                                 Spacer(minLength: 0)
                             }
                         }
@@ -233,6 +234,21 @@ struct CentoWidgetView: View {
         }.frame(height: large ? 58 : 54)
     }
 
+    private func mediumUpcomingRow(_ item: BirthdayWidgetUpcoming) -> some View {
+        HStack(spacing: 6) {
+            avatar(item.person, size: 22)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(item.person.name).font(.system(size: 11, weight: .bold)).foregroundStyle(WidgetColors.text).lineLimit(1)
+                Text(item.dateLabel).font(.system(size: 10)).foregroundStyle(WidgetColors.muted).lineLimit(1)
+            }
+            Spacer(minLength: 2)
+            VStack(alignment: .trailing, spacing: 0) {
+                Text(String(item.daysLeft)).font(.system(size: 16, weight: .bold, design: .rounded)).foregroundStyle(WidgetColors.accent)
+                Text(item.daysUnit).font(.system(size: 9)).foregroundStyle(WidgetColors.muted).lineLimit(1)
+            }
+        }
+    }
+
     private func smallNames(_ hero: BirthdayWidgetHero) -> String {
         guard let first = hero.people.first else { return "" }
         if hero.totalCount == 1 { return first.name }
@@ -301,7 +317,7 @@ struct CentoWidget: Widget {
         }
         .configurationDisplayName("Cento")
         .description("Prossimi compleanni.")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline])
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }
 

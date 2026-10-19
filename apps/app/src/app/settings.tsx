@@ -240,7 +240,7 @@ export default function SettingsScreen() {
           </Row>
         </Card>
 
-        <Card style={{ gap: space.sm }}>
+        {/* <Card style={{ gap: space.sm }}>
           <SectionLabel>{t('settings.widget')}</SectionLabel>
           {widgetsSupported ? (
             <>
@@ -255,7 +255,7 @@ export default function SettingsScreen() {
           ) : (
             <Body muted>{t('settings.widget.web')}</Body>
           )}
-        </Card>
+        </Card> */}
 
         <Card style={{ gap: space.sm }}>
           <SectionLabel>{t('settings.spending')}</SectionLabel>
