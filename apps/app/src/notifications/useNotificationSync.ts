@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { AppState } from 'react-native';
 import { router } from 'expo-router';
 import { todayISO } from '@cento/core';
 import { useData } from '@/storage/DataProvider';
@@ -23,6 +24,17 @@ export function useDerivedSync() {
   const { locale, dateFnsLocale } = useLocale();
   const t = useT();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const appState = useRef(AppState.currentState);
+  const [foregroundRefresh, setForegroundRefresh] = useState(0);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextState) => {
+      const wasBackgrounded = appState.current === 'background' || appState.current === 'inactive';
+      appState.current = nextState;
+      if (wasBackgrounded && nextState === 'active') setForegroundRefresh((count) => count + 1);
+    });
+    return () => subscription.remove();
+  }, []);
 
   useEffect(() => {
     if (!ready || !dateFnsLocale) return;
@@ -62,6 +74,7 @@ export function useDerivedSync() {
     locale,
     dateFnsLocale,
     t,
+    foregroundRefresh,
   ]);
 
   useEffect(() => {
