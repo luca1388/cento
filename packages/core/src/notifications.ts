@@ -68,9 +68,11 @@ export function planNotifications(people: Person[], opts: PlanOptions): PlannedN
             ? opts.t('notifications.birthday.title', { name: firstName })
             : opts.t('notifications.birthdaySoon.title', { name: firstName, when: relativeDays(offset, opts.t).toLowerCase() });
         const body =
-          ev.age !== undefined
-            ? opts.t('notifications.birthday.body', { count: ev.age, date: opts.formatDate(ev.date) })
-            : opts.t('notifications.birthday.bodyNoAge', { date: opts.formatDate(ev.date) });
+          offset > 0
+            ? opts.t('notifications.birthdaySoon.body', { date: opts.formatDate(ev.date) })
+            : ev.age !== undefined
+              ? opts.t('notifications.birthday.body', { count: ev.age, date: opts.formatDate(ev.date) })
+              : opts.t('notifications.birthday.bodyNoAge', { date: opts.formatDate(ev.date) });
         out.push({
           id: `birthday:${person.id}:${ev.date}:${offset}`,
           personId: person.id,

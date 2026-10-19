@@ -38,6 +38,24 @@ describe('notification plan', () => {
     expect(plan.find((n) => n.kind === 'prompt')?.deepLink).toBe('cento://person/p2/record?occasion=birthday&year=2026');
   });
 
+  it('uses the birthday wishes body only on the birthday itself', () => {
+    const plan = planNotifications([giulia], {
+      today: '2026-10-08',
+      notificationTime: '09:00',
+      formatDate: (date) => date,
+      t,
+    });
+    const birthdayBodies = plan
+      .filter((notification) => notification.id.startsWith('birthday:'))
+      .map((notification) => [notification.id.split(':').at(-1), notification.body]);
+
+    expect(birthdayBodies).toEqual([
+      ['7', 'notifications.birthdaySoon.body {"date":"2026-10-15"}'],
+      ['1', 'notifications.birthdaySoon.body {"date":"2026-10-15"}'],
+      ['0', 'notifications.birthday.body {"count":29,"date":"2026-10-15"}'],
+    ]);
+  });
+
   it('respects the limit', () => {
     const many = Array.from({ length: 40 }, (_, i) => ({ ...giulia, id: `p${i}`, nameDay: null }));
     expect(planNotifications(many, { today: '2026-10-13', notificationTime: '09:00', formatDate: (d) => d, t, limit: 10 })).toHaveLength(
