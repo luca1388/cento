@@ -81,7 +81,8 @@ struct CentoWidgetView: View {
                         .lineLimit(1)
                     ring(hero, size: 88, inCard: false)
                     Text(smallNames(hero)).font(.system(size: 16, weight: .bold)).foregroundStyle(WidgetColors.text).lineLimit(1).minimumScaleFactor(0.8)
-                    Text(smallDetail(hero)).font(.system(size: 12)).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75)
+                    if let detail = smallDetail(hero) { Text(detail).font(.system(size: 12)).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75) }
+                    Text(hero.dateLabel).font(.system(size: 12)).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75)
                 }.frame(maxWidth: .infinity, maxHeight: .infinity)
             } else { emptyFallback }
         }
@@ -101,7 +102,8 @@ struct CentoWidgetView: View {
                                     .font(.system(size: 10, weight: .bold)).tracking(0.6).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75)
                                 ring(hero, size: 64, inCard: false)
                                 Text(smallNames(hero)).font(.system(size: 14, weight: .bold)).foregroundStyle(WidgetColors.text).lineLimit(1).minimumScaleFactor(0.75)
-                                Text(smallDetail(hero)).font(.system(size: 10)).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75)
+                                if let detail = smallDetail(hero) { Text(detail).font(.system(size: 10)).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75) }
+                                Text(hero.dateLabel).font(.system(size: 10)).foregroundStyle(WidgetColors.muted).lineLimit(1).minimumScaleFactor(0.75)
                             }
                             .frame(width: leftWidth, maxHeight: .infinity)
                             Rectangle().fill(WidgetColors.track).frame(width: 1)
@@ -257,9 +259,9 @@ struct CentoWidgetView: View {
         return hero.totalCount == 2 ? "\(firstName) e \(second)" : "\(firstName), \(second) +\(hero.totalCount - 2)"
     }
 
-    private func smallDetail(_ hero: BirthdayWidgetHero) -> String {
-        guard hero.totalCount == 1, let age = hero.people.first?.ageLabel else { return "\(hero.relativeLabel) · \(hero.countLabel)" }
-        return "\(hero.relativeLabel) · \(age)"
+    private func smallDetail(_ hero: BirthdayWidgetHero) -> String? {
+        guard hero.totalCount == 1 else { return hero.countLabel }
+        return hero.people.first?.ageLabel
     }
 
     private func color(_ hex: String?) -> Color {
