@@ -78,6 +78,7 @@ function Navigator() {
         <Stack.Screen name="person/new" options={{ title: t('form.newTitle'), presentation: 'modal' }} />
         <Stack.Screen name="person/[id]/index" options={{ title: '' }} />
         <Stack.Screen name="person/[id]/edit" options={{ title: t('form.editTitle'), presentation: 'modal' }} />
+        <Stack.Screen name="person/[id]/card" options={{ title: t('card.title'), presentation: 'modal' }} />
         <Stack.Screen name="person/[id]/celebration" options={{ title: t('celebration.editTitle'), presentation: 'modal' }} />
         <Stack.Screen name="person/[id]/gift" options={{ title: t('gift.title'), presentation: 'modal' }} />
         <Stack.Screen name="person/[id]/record" options={{ title: t('record.title'), presentation: 'modal' }} />

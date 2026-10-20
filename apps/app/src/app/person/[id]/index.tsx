@@ -113,6 +113,13 @@ export default function PersonDetailScreen() {
               {birthday.milestone ? ` · ${t('event.milestone')}` : ''}
             </Body>
           ) : null}
+          {birthday ? (
+            <Button
+              label={t('card.writeWishes')}
+              variant="secondary"
+              onPress={() => router.push({ pathname: '/person/[id]/card', params: { id: person.id } })}
+            />
+          ) : null}
           {person.nameDay ? (
             <Body muted>{t('person.namedayOn', { date: formatDayMonth(person.nameDay, dateFnsLocale) })}</Body>
           ) : (

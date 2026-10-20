@@ -1,0 +1,1 @@
+export { shareCardImage } from './exportCard.native';
