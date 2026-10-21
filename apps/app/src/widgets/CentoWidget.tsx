@@ -31,7 +31,7 @@ function ringSvg(daysLeft: number, progress: number, size: number, unit: string,
   const badgeRadius = size >= 80 ? 15 : 11;
   const badgeX = center + radius * 0.72;
   const badgeY = center + radius * 0.72;
-  const fontSize = daysLeft === 0 ? 12 : size >= 80 ? 34 : 26;
+  const fontSize = daysLeft === 0 ? size >= 80 ? 14 : 12 : size >= 80 ? 34 : 26;
   const badgeFontSize = badge.length > 1 ? 12 : size <= 80 ? 14 : 16;
   const ringUnit = size <= 70 ? '' : unitText;
   const unitX = size <= 80 ? center - 5 : center;
@@ -39,7 +39,7 @@ function ringSvg(daysLeft: number, progress: number, size: number, unit: string,
   const unitFontSize = size <= 80 ? 9 : 11;
   const centerContent = size <= 70 && secondPerson
     ? `<circle cx="${center - 12}" cy="${center}" r="14" fill="${badgeColor}" stroke="${colors.bg}" stroke-width="2"/><text x="${center - 12}" y="${center + 5}" fill="${colors.onAvatar}" font-size="14" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${badge}</text><circle cx="${center + 12}" cy="${center}" r="14" fill="${secondPerson.avatarColor}" stroke="${colors.bg}" stroke-width="2"/><text x="${center + 12}" y="${center + 5}" fill="${colors.onAvatar}" font-size="14" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${secondPerson.initial}</text>`
-    : `<text x="${center}" y="${center + (ringUnit ? 4 : 10)}" fill="${colors.accent}" font-size="${fontSize}" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${label}</text>${ringUnit ? `<text x="${unitX}" y="${unitY}" fill="${colors.textMuted}" font-size="${unitFontSize}" font-family="Roboto, sans-serif" text-anchor="middle">${ringUnit}</text>` : ''}`;
+    : `<text x="${center}" y="${center + (daysLeft === 0 ? fontSize * 0.35 : ringUnit ? 4 : 10)}" fill="${colors.accent}" font-size="${fontSize}" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${label}</text>${ringUnit ? `<text x="${unitX}" y="${unitY}" fill="${colors.textMuted}" font-size="${unitFontSize}" font-family="Roboto, sans-serif" text-anchor="middle">${ringUnit}</text>` : ''}`;
   const badgeContent = size <= 70 || !showBadge ? '' : `<circle cx="${badgeX}" cy="${badgeY}" r="${badgeRadius}" fill="${badgeColor}" stroke="${colors.bg}" stroke-width="3"/><text x="${badgeX}" y="${badgeY + badgeFontSize * 0.34}" fill="${colors.onAvatar}" font-size="${badgeFontSize}" font-family="Roboto, sans-serif" font-weight="700" text-anchor="middle">${badge}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="${colors.ringTrack}" stroke-width="5"/><circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="${colors.accent}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${dash} ${circumference}" transform="rotate(-90 ${center} ${center})"/>${centerContent}${badgeContent}</svg>`;
 }
@@ -76,10 +76,10 @@ function UpcomingRow({ item, rowHeight }: { item: NonNullable<BirthdayWidgetMode
 
 function EmptyWidget({ model }: { model: BirthdayWidgetModel }) {
   return (
-    <FlexWidget style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-      <TextWidget text={model.emptyTitle} style={{ fontSize: 15, color: colors.text, fontWeight: '700', textAlign: 'center' }} maxLines={2} />
-      <TextWidget text={model.emptyHint} style={{ fontSize: 11, color: colors.textMuted, textAlign: 'center', marginTop: 5 }} maxLines={2} />
-      {model.emptyReadHint ? <TextWidget text={model.emptyReadHint} style={{ fontSize: 10, color: colors.textMuted, textAlign: 'center', marginTop: 3 }} maxLines={1} /> : null}
+    <FlexWidget style={{ width: 'match_parent', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+      <TextWidget text={model.emptyTitle} style={{ width: 'match_parent', fontSize: 15, color: colors.text, fontWeight: '700', textAlign: 'center' }} maxLines={2} />
+      <TextWidget text={model.emptyHint} style={{ width: 'match_parent', fontSize: 11, color: colors.textMuted, textAlign: 'center', marginTop: 5 }} maxLines={2} />
+      {model.emptyReadHint ? <TextWidget text={model.emptyReadHint} style={{ width: 'match_parent', fontSize: 10, color: colors.textMuted, textAlign: 'center', marginTop: 3 }} maxLines={1} /> : null}
     </FlexWidget>
   );
 }

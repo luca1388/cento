@@ -11,6 +11,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.cento",
+      "icon": {
+        "light": "./assets/icon.png",
+        "dark": "./assets/icon-dark.png",
+        "tinted": "./assets/icon-tinted.png"
+      },
       "entitlements": {
         "com.apple.security.application-groups": [
           "group.app.cento"
@@ -27,10 +32,9 @@
     "android": {
       "package": "app.cento",
       "adaptiveIcon": {
-        "backgroundColor": "#10213f",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#7C4DFF",
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "monochromeImage": "./assets/adaptive-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
       "permissions": [
@@ -44,11 +48,11 @@
       "bundler": "metro",
       "output": "single",
       "lang": "it",
-      "themeColor": "#10213f",
+      "themeColor": "#7C4DFF",
       "description": "I tuoi compleanni restano sul tuo telefono. Nessun account, nessun cloud, nessuna pubblicità.",
       "name": "Cento",
       "shortName": "Cento",
-      "backgroundColor": "#f7f4ec"
+      "backgroundColor": "#7C4DFF"
     },
     "plugins": [
       "expo-router",
@@ -58,9 +62,19 @@
       "expo-sharing",
       "expo-background-task",
       [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 240,
+          "resizeMode": "contain",
+          "backgroundColor": "#7C4DFF"
+        }
+      ],
+      [
         "expo-notifications",
         {
-          "color": "#10213f",
+          "icon": "./assets/notification-icon.png",
+          "color": "#7C4DFF",
           "defaultChannel": "cento-reminders"
         }
       ],
