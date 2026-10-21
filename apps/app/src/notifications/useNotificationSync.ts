@@ -20,7 +20,7 @@ export function deepLinkToPath(link: string): string {
  * and the widget snapshot and hand them to the OS. Both are cheap (only the nearest batch is ever scheduled).
  */
 export function useDerivedSync() {
-  const { ready, people, celebrations, settings, updateSettings } = useData();
+  const { ready, people, celebrations, settings, updateSettings, refresh } = useData();
   const { locale, dateFnsLocale } = useLocale();
   const t = useT();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -31,10 +31,14 @@ export function useDerivedSync() {
     const subscription = AppState.addEventListener('change', (nextState) => {
       const wasBackgrounded = appState.current === 'background' || appState.current === 'inactive';
       appState.current = nextState;
-      if (wasBackgrounded && nextState === 'active') setForegroundRefresh((count) => count + 1);
+      if (wasBackgrounded && nextState === 'active') {
+        void refresh()
+          .then(() => setForegroundRefresh((count) => count + 1))
+          .catch((error) => console.warn('foreground data refresh', error));
+      }
     });
     return () => subscription.remove();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (!ready || !dateFnsLocale) return;

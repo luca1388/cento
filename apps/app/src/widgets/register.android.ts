@@ -11,6 +11,7 @@ async function handler(props: WidgetTaskHandlerProps) {
   const snapshot = await readWidgetSnapshot().catch(() => null);
   switch (props.widgetAction) {
     case 'WIDGET_ADDED':
+    case 'WIDGET_CLICK':
     case 'WIDGET_UPDATE':
     case 'WIDGET_RESIZED':
       props.renderWidget(React.createElement(CentoWidget, {

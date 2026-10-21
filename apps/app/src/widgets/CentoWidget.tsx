@@ -84,8 +84,9 @@ function EmptyWidget({ model }: { model: BirthdayWidgetModel }) {
   );
 }
 
-function CompactWidget({ model, width, height }: { model: BirthdayWidgetModel; width: number; height: number }) {
+function CompactWidget({ model, width, height, wideHero = false }: { model: BirthdayWidgetModel; width: number; height: number; wideHero?: boolean }) {
   const hero = model.hero!;
+  const tight = !wideHero && width < 150;
   const first = hero.people[0];
   const names = hero.totalCount === 1
     ? first!.name
@@ -95,14 +96,17 @@ function CompactWidget({ model, width, height }: { model: BirthdayWidgetModel; w
   const detail = hero.totalCount === 1
     ? first?.ageLabel ?? ''
     : hero.countLabel;
+  const ringSize = tight
+    ? Math.max(48, Math.min(56, Math.min(width, height) - 40))
+    : Math.max(72, Math.min(88, Math.min(width, height) - 64));
   return (
-    <FlexWidget style={{ width: 'match_parent', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGap: 8, padding: 4 }}>
-      <TextWidget text={hero.totalCount > 1 ? model.sectionNextPlural : model.sectionNext} style={{ fontSize: 10, color: colors.textMuted, fontWeight: '700', textAlign: 'center' }} maxLines={1} />
-      <Ring model={hero} size={Math.max(72, Math.min(88, Math.min(width, height) - 64))} person={first} />
+    <FlexWidget style={{ width: 'match_parent', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGap: tight ? 3 : 8, padding: tight ? 2 : 4 }}>
+      <TextWidget text={hero.totalCount > 1 ? model.sectionNextPlural : model.sectionNext} style={{ fontSize: tight ? 9 : 10, color: colors.textMuted, fontWeight: '700', textAlign: 'center' }} maxLines={1} />
+      <Ring model={hero} size={ringSize} person={first} />
       <FlexWidget style={{ flexDirection: 'column', alignItems: 'center' }}>
-        <TextWidget text={names} style={{ fontSize: 16, color: colors.text, fontWeight: '700', textAlign: 'center' }} maxLines={1} truncate="END" />
-        {detail ? <TextWidget text={detail} style={{ fontSize: 12, color: colors.textMuted, textAlign: 'center' }} maxLines={1} truncate="END" /> : null}
-        <TextWidget text={hero.dateLabel} style={{ fontSize: 12, color: colors.textMuted, textAlign: 'center' }} maxLines={1} truncate="END" />
+        <TextWidget text={names} style={{ fontSize: tight ? 13 : 16, color: colors.text, fontWeight: '700', textAlign: 'center' }} maxLines={1} truncate="END" />
+        {!tight && detail ? <TextWidget text={detail} style={{ fontSize: 12, color: colors.textMuted, textAlign: 'center' }} maxLines={1} truncate="END" /> : null}
+        <TextWidget text={hero.dateLabel} style={{ fontSize: tight ? 10 : 12, color: colors.textMuted, textAlign: 'center' }} maxLines={1} truncate="END" />
       </FlexWidget>
     </FlexWidget>
   );
@@ -115,7 +119,7 @@ function WideWidget({ model, width, height }: { model: BirthdayWidgetModel; widt
   return (
     <FlexWidget style={{ width: 'match_parent', flex: 1, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 4, paddingVertical: 2 }}>
       <FlexWidget style={{ width: leftWidth, height: 'match_parent' }}>
-        <CompactWidget model={model} width={leftWidth} height={height} />
+        <CompactWidget model={model} width={leftWidth} height={height} wideHero />
       </FlexWidget>
       <FlexWidget style={{ width: 1, height: 'match_parent', marginHorizontal: 6, backgroundColor: colors.ringTrack }} />
       <FlexWidget style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
