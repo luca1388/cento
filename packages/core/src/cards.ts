@@ -17,11 +17,14 @@ const it: GreetingTemplate[] = [
   { id: 'warm-any-4', tone: 'warm', relationship: 'any', text: 'Buon compleanno {name}! Un pensiero speciale per te in questo giorno speciale. Che sia un anno meraviglioso.' },
   { id: 'warm-any-5', tone: 'warm', relationship: 'any', needsAge: true, text: '{age} anni e ogni anno sempre meglio! Buon compleanno, {name}, ti auguro il meglio.' },
   { id: 'warm-any-6', tone: 'warm', relationship: 'any', needsAge: true, text: 'Auguri per i tuoi {age} anni, {name}! Che sia l’anno più bello di sempre.' },
+  { id: 'warm-any-7', tone: 'warm', relationship: 'any', text: 'Buon compleanno {name}! Ti auguro una giornata bellissima e un anno ancora più bello.' },
   { id: 'warm-amico-1', tone: 'warm', relationship: 'amico', text: 'Buon compleanno, {name}! Grazie di esserci sempre. Ti auguro un anno ricco di avventure e di risate.' },
   { id: 'warm-amico-2', tone: 'warm', relationship: 'amico', text: 'Auguri {name}! Appena riesci festeggiamo come si deve: ti devo almeno un brindisi. ' },
+  { id: 'warm-amico-3', tone: 'warm', relationship: 'amico', text: 'Buon compleanno, {name}! Sei una persona veramente speciale e sono felice di averti nella mia vita.' },
   { id: 'warm-famiglia-1', tone: 'warm', relationship: 'famiglia', text: 'Buon compleanno {name}! Ti voglio un mondo di bene. Spero che oggi sia una giornata dolcissima, piena d’amore.' },
   { id: 'warm-famiglia-2', tone: 'warm', relationship: 'famiglia', text: 'Tantissimi auguri, {name}! La famiglia è più bella con te. Ti abbraccio forte!' },
   { id: 'warm-famiglia-3', tone: 'warm', relationship: 'famiglia', text: 'Auguri {name}! Grazie per tutto quello che fai e per come ci sei sempre. Ti voglio bene.' },
+  { id: 'warm-famiglia-4', tone: 'warm', relationship: 'famiglia', text: 'Buon compleanno {name}! Un abbraccio grande e tanti baci.' },
   { id: 'funny-any-1', tone: 'funny', relationship: 'any', text: 'Auguri {name}! Un anno in più, ma tranquillo: il vino migliora con l’età. ' },
   { id: 'funny-any-2', tone: 'funny', relationship: 'any', text: 'Non stai invecchiando, {name}, stai maturando come il buon formaggio. Buon compleanno! ' },
   { id: 'funny-any-3', tone: 'funny', relationship: 'any', text: 'Buon compleanno {name}! Oggi si mangia torta senza sensi di colpa: lo dice la legge (l’ho appena scritta io). ' },
@@ -58,11 +61,14 @@ const en: GreetingTemplate[] = [
   { id: 'warm-any-4', tone: 'warm', relationship: 'any', text: 'Happy birthday, {name}! A special thought for you on your special day. Have a wonderful year.' },
   { id: 'warm-any-5', tone: 'warm', relationship: 'any', needsAge: true, text: '{age} and getting better every year! Happy birthday, {name}, all the best.' },
   { id: 'warm-any-6', tone: 'warm', relationship: 'any', needsAge: true, text: 'Turning {age}! Happy birthday {name}, may this be your best year yet.' },
+  { id: 'warm-any-7', tone: 'warm', relationship: 'any', text: 'Happy birthday, dear {name}! Wishing you a beautiful day and an even better year.' },
   { id: 'warm-amico-1', tone: 'warm', relationship: 'amico', text: 'Happy birthday, {name}! Thanks for always being there. Wishing you a year full of adventures and laughter.' },
   { id: 'warm-amico-2', tone: 'warm', relationship: 'amico', text: 'Happy birthday {name}! As soon as you can, we’re celebrating properly. I owe you at least one drink. ' },
+  { id: 'warm-amico-3', tone: 'warm', relationship: 'amico', text: 'Happy birthday, {name}! You’re such a special friend and I’m so glad to have you in my life.' },
   { id: 'warm-famiglia-1', tone: 'warm', relationship: 'famiglia', text: 'Happy birthday {name}! I love you so much. I hope today is sweet and full of love.' },
   { id: 'warm-famiglia-2', tone: 'warm', relationship: 'famiglia', text: 'Happy birthday, {name}! Our family is better with you in it. Big hug!' },
   { id: 'warm-famiglia-3', tone: 'warm', relationship: 'famiglia', text: 'Happy birthday {name}! Thank you for everything you do and for always being there. Love you.' },
+  { id: 'warm-famiglia-4', tone: 'warm', relationship: 'famiglia', text: 'Happy birthday, dear {name}! Sending you a huge hug and lots of love.' },
   { id: 'funny-any-1', tone: 'funny', relationship: 'any', text: 'Happy birthday {name}! Another year older, but don’t worry: wine gets better with age. ' },
   { id: 'funny-any-2', tone: 'funny', relationship: 'any', text: 'You’re not getting older, {name}, you’re maturing like good cheese. Happy birthday! ' },
   { id: 'funny-any-3', tone: 'funny', relationship: 'any', text: 'Happy birthday {name}! Today you can eat cake without guilt. It’s the law (I just wrote it). ' },
@@ -109,10 +115,13 @@ export function greetingTemplates(
 }
 
 export function renderGreeting(template: GreetingTemplate, name: string, age?: number): string {
-  return template.text.replaceAll('{name}', name.trim().split(/\s+/)[0] ?? name).replaceAll('{age}', age === undefined ? '' : String(age));
+  return template.text
+    .replace(/\{g:([^|}]+)\|([^}]+)\}/gu, '$1/$2')
+    .replaceAll('{name}', name.trim().split(/\s+/)[0] ?? name)
+    .replaceAll('{age}', age === undefined ? '' : String(age));
 }
 
-export function removeRecipientName(message: string, name: string): string {
+function removeRecipientName(message: string, name: string): string {
   const firstName = name.trim().split(/\s+/)[0];
   if (!firstName) return message.trim();
   const escapedName = firstName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -129,6 +138,17 @@ export function removeRecipientName(message: string, name: string): string {
     .trim();
 
   return result.replace(/^(\p{Ll})/u, (letter) => letter.toLocaleUpperCase());
+}
+
+export function prepareGreetingForCard(message: string, name: string, locale: GreetingLocale): string {
+  const withoutName = removeRecipientName(message, name);
+  const headline = locale === 'it' ? 'Buon compleanno' : 'Happy birthday';
+  const escapedHeadline = headline.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const genderedSalutation = locale === 'it' ? /^Caro\/Cara,\s*Buon compleanno[,!.]?\s*/iu : null;
+  const prepared = genderedSalutation ? withoutName.replace(genderedSalutation, 'Caro/Cara, ') : withoutName;
+  const result = prepared.replace(new RegExp(`^${escapedHeadline}[,!.]?\\s*`, 'iu'), '');
+  const normalized = result.replace(/^(\p{Ll})/u, (letter) => letter.toLocaleUpperCase());
+  return normalized || (locale === 'it' ? 'Goditi la giornata.' : 'Enjoy your day!');
 }
 
 export interface FitOptions {

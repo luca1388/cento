@@ -8,7 +8,7 @@ This file lists every message template shipped in the app, for copy review. The 
 |-------------|---------|
 | `{name}` | First name of the person (first word of the saved name, first letter uppercased) |
 | `{age}` | Age they are turning. The template is skipped when the birth year is unknown |
-| `{g:male\|female}` | Gender agreement, e.g. `{g:Caro\|Cara}`. The template is skipped when the gender is not set |
+| `{g:male\|female}` | Gender agreement, e.g. `{g:Caro\|Cara}`. When gender is unknown, both forms are shown with `/` so the user can choose or edit |
 
 Rules for writers:
 

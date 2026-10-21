@@ -19,6 +19,7 @@ Rules:
 - When a template is selected, its recipient-name salutation is removed because the card displays the name separately; subsequent user edits are preserved as written.
 - Designs recommended for the chosen tone come first in the strip; all other designs follow.
 - Designs that show the age (`needsAge`) are hidden when the birth year is unknown.
+- Gender-agreement phrases show both alternatives with `/` when recipient gender is unknown; the user can choose or edit the wording.
 - The card labels follow the message language (Italian or English).
 - If the message does not fit the card even at the smallest font size, an inline warning asks the user to shorten it or pick another style. Sharing is still allowed.
 

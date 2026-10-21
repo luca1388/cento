@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { Alert, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { ageOn, buildUpcomingEvents, fitGreeting, greetingTemplates, parseISODate, removeRecipientName, renderGreeting, todayISO, type GreetingTone } from '@cento/core';
+import { ageOn, buildUpcomingEvents, fitGreeting, greetingTemplates, parseISODate, prepareGreetingForCard, renderGreeting, todayISO, type GreetingTone } from '@cento/core';
 import type { View as NativeView } from 'react-native';
 import { Body, Button, Chip, Screen, SectionLabel } from '@/components/ui';
 import { useData } from '@/storage/DataProvider';
@@ -72,7 +72,7 @@ export default function GreetingCardScreen() {
             </View>
             <View style={{ gap: space.sm }}>
               {templates.map((template) => {
-                const text = removeRecipientName(renderGreeting(template, person.firstName, age), person.firstName);
+                const text = prepareGreetingForCard(renderGreeting(template, person.firstName, age), person.firstName, locale);
                 return (
                   <Pressable key={template.id} onPress={() => { setMessage(text); setStep('edit'); }} style={({ pressed }) => ({ backgroundColor: theme.card, borderWidth: 1, borderColor: theme.line, borderRadius: 8, padding: space.md, opacity: pressed ? 0.75 : 1 })}>
                     <Text style={{ color: theme.text, fontSize: 14, lineHeight: 20 }}>{text}</Text>
