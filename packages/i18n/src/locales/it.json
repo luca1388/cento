@@ -244,7 +244,7 @@
   "backup.import.title": "Importa",
   "backup.import.pick": "Scegli un file di backup",
   "backup.import.mode": "Come importare",
-  "backup.import.merge": "Unisci (aggiorna le persone con lo stesso id)",
+  "backup.import.merge": "Unisci esistenti",
   "backup.import.replace": "Sostituisci tutto",
   "backup.import.done_one": "Importata {{count}} persona.",
   "backup.import.done_other": "Importate {{count}} persone.",

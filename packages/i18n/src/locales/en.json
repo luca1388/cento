@@ -244,7 +244,7 @@
   "backup.import.title": "Import",
   "backup.import.pick": "Choose a backup file",
   "backup.import.mode": "How to import",
-  "backup.import.merge": "Merge (update people with the same id)",
+  "backup.import.merge": "Merge existing",
   "backup.import.replace": "Replace everything",
   "backup.import.done_one": "Imported {{count}} person.",
   "backup.import.done_other": "Imported {{count}} people.",
