@@ -276,8 +276,6 @@
   "settings.notifications.scheduled_one": "{{count}} notifica programmata sul dispositivo",
   "settings.notifications.scheduled_other": "{{count}} notifiche programmate sul dispositivo",
   "settings.notifications.unavailable": "Le notifiche non sono disponibili qui: servono l'app sul telefono come development build (Expo Go su Android non le supporta).",
-  "settings.spending": "Spesa",
-  "settings.spending.year": "Regali {{year}}: {{amount}}",
   "settings.widget": "Widget",
   "settings.widget.hint": "Il widget mostra le prossime date; si aggiorna da solo a mezzanotte.",
   "settings.widget.updated": "Ultimo aggiornamento: {{date}}",

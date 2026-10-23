@@ -258,11 +258,6 @@ export default function SettingsScreen() {
         </Card> */}
 
         <Card style={{ gap: space.sm }}>
-          <SectionLabel>{t('settings.spending')}</SectionLabel>
-          <Body muted>{t('settings.spending.year', { year, amount: money.format(spent) })}</Body>
-        </Card>
-
-        <Card style={{ gap: space.sm }}>
           <SectionLabel>{t('settings.data')}</SectionLabel>
           <Body muted>{t('settings.data.count', { count: people.length })}</Body>
           <Row>

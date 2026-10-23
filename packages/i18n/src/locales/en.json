@@ -276,8 +276,6 @@
   "settings.notifications.scheduled_one": "{{count}} notification scheduled on the device",
   "settings.notifications.scheduled_other": "{{count}} notifications scheduled on the device",
   "settings.notifications.unavailable": "Notifications are not available here: they need the phone app as a development build (Expo Go on Android does not support them).",
-  "settings.spending": "Spending",
-  "settings.spending.year": "Gifts {{year}}: {{amount}}",
   "settings.widget": "Widget",
   "settings.widget.hint": "The widget shows the next dates and refreshes itself at midnight.",
   "settings.widget.updated": "Last update: {{date}}",
